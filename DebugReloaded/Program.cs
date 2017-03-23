@@ -9,11 +9,6 @@ namespace DebugReloaded {
     class Program {
         static void Main(string[] args) {
             
-            var ax = new Register("ax");
-
-
-
-
 
             Console.ReadKey();
         }
