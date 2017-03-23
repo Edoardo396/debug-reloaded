@@ -22,9 +22,24 @@ namespace DebugTests {
 
             context.Interpreter.ExecuteCommand(new DebugCommand("r ax"), "ffff");
 
+            context.Interpreter.ExecuteCommand(new DebugCommand("r"));
             
             Assert.IsTrue(context.GetRegisterByName("ax").ToString() == "FFFF");
         }
+
+        [TestMethod]
+        public void TestDCommand() {
+            context.Interpreter.ExecuteCommand(new DebugCommand("d 100"));
+        }
+
+        [TestMethod]
+        public void TestECommand() {
+            context.Interpreter.ExecuteCommand(new DebugCommand("e 100"), "aabbccddeeff");
+
+
+            Assert.IsTrue(context.mainMemory.Dump(100, 6) == "AA-BB-CC-DD-EE-FF");
+        }
+
 
 
 
