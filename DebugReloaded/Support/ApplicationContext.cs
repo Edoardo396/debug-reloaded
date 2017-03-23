@@ -4,25 +4,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DebugReloaded.Containers;
+using DebugReloaded.Interface;
 
 namespace DebugReloaded.Support {
     public class ApplicationContext {
-
         public static readonly int memSize = 65535;
 
-        Register ax = new Register("ax");
+        public Memory mainMemory = new Memory(memSize);
 
-        Register bx = new Register("bx");
+        public CommandInterpreter Interpreter;
 
-        Register cx = new Register("cx");
+        public List<Register> Registers { get; } = new List<Register>() {
+            new Register("ax"),
+            new Register("bx"),
+            new Register("cx"),
+            new Register("dx"),
+            new Register("si"),
+            new Register("di"),
+            new Register("cs"),
+            new Register("ds")
+        };
 
-        Register dx = new Register("dx");
+        public Register GetRegisterByName(string name) {
+            return Registers.Find(r => r.Name == name);
+        }
 
-        Register ds = new Register("ds");
-
-        Register ip = new Register("ip");
-
-        Memory mainMemory = new Memory(memSize);
-
+        public ApplicationContext() {
+            Interpreter = new CommandInterpreter(this);
+        }
     }
 }

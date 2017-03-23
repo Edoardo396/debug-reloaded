@@ -49,9 +49,15 @@ namespace DebugReloaded.Containers {
             string str = string.Empty;
 
             for (int i = 0; i < howmany; i++) 
-                str += $"{content[i + startindex]:X}";
+                str += $"{content[i + startindex]:X2}-";
+
+            str = str.Remove(str.Length - 1);
 
             return str;
+        }
+
+        public string Dump() {
+            return this.Dump(0, content.Length);
         }
 
         public void SetValuesLE(int startIndex, byte[] bytes) {

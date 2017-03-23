@@ -51,6 +51,7 @@
     <Compile Include="MemoryTests.cs" />
     <Compile Include="RegisterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DebugCommandsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

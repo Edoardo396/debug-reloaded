@@ -29,7 +29,7 @@ namespace DebugTests {
 
             string memDump = mem.Dump(500, 4);
 
-            Assert.IsTrue(memDump == "FF50780");
+            Assert.IsTrue(memDump == "FF-50-78-00");
             Assert.IsTrue(mem.GetValue(500) == 0xff);
             Assert.IsTrue(mem[501] == 0x50);
             Assert.IsTrue(BitConverter.ToString(mem.GetValues(500,4)) == BitConverter.ToString(testBytes));
@@ -62,7 +62,7 @@ namespace DebugTests {
 
             mem.SetValues(500, testBytes);
 
-            Assert.IsTrue(mem.SubMemory(500, 5).Dump(0, 5) == "FFBBAAEE0");
+            Assert.IsTrue(mem.SubMemory(500, 5).Dump() == "FF-BB-AA-EE-00");
 
         }
     }

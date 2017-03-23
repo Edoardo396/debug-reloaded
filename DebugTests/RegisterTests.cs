@@ -27,5 +27,17 @@ namespace DebugTests {
             Assert.IsTrue(reg.Value[0] == a && reg.Value[1] == b);
             Assert.IsTrue(reg.Name == "test");
         }
+
+        [TestMethod]
+        public void SetValueTest() {
+
+            var reg = new Register("test") {H = 0x0, L = 0x0};
+
+            reg.SetValue("FFFF");
+            Assert.IsTrue(reg.ToString() == "FFFF");
+            reg.SetValue(new byte[]{0xee, 0xee});
+            Assert.IsTrue(reg.ToString() == "EEEE");
+
+        }
     }
 }
