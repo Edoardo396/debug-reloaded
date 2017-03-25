@@ -8,7 +8,7 @@ namespace DebugTests {
     [TestClass]
     public class DebugCommandsTests {
 
-        private static ApplicationContext context;
+        public static ApplicationContext context;
 
 
         [AssemblyInitialize]

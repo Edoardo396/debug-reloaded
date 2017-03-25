@@ -1,7 +1,8 @@
 ﻿using System.Collections;
+using System.Linq;
 
 namespace DebugReloaded.Containers {
-    public class Memory {
+    public class Memory : IValuable {
 
         private byte[] content;
 
@@ -41,6 +42,15 @@ namespace DebugReloaded.Containers {
                 content[i + index] = bytes[i];
         }
 
+        public void ValSetValues(int index, byte[] bytes) {
+            this.SetValuesLE(index, bytes);
+        }
+
+        public byte[] ValGetValues(int index, int howmany) {
+            return GetValuesLE(index);
+   ;     }
+
+
         public void SetValue(int index, byte value) {
             SetValues(index, new[] {value});
         }
@@ -60,7 +70,11 @@ namespace DebugReloaded.Containers {
             return this.Dump(0, content.Length);
         }
 
-        public void SetValuesLE(int startIndex, byte[] bytes) {
+        public void SetValuesLE(int startIndex, byte[] _bytes) {
+
+            byte[] bytes = new byte[2];
+
+            bytes = _bytes.Length == 1 ? new byte[] {0, _bytes[0]} : _bytes;
 
             if (bytes.Length != 2)
                 throw new BadMemoryException(this, startIndex, "In little endian mode yot can't set more then 2 values at a time");
@@ -79,6 +93,13 @@ namespace DebugReloaded.Containers {
 
             return new Memory(bytes);
         }
-     
+
+        // I USE TUPLES
+        public static (bool isMemory, int location) IsMemoryAddress(string value) {
+            int loc = -1;
+            bool isMem = value.StartsWith("[") && value.EndsWith("]") && int.TryParse(value.Substring(1, value.Length - 2), out loc);
+            return (isMem, loc);
+        }
+
     }
 }

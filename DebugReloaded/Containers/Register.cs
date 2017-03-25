@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DebugReloaded.Containers {
-    public class Register {
+    public class Register : IValuable {
         private byte[] content = new byte[2] {0x00, 0x00};
 
         public string Name { get; set; } = null;
@@ -52,6 +52,14 @@ namespace DebugReloaded.Containers {
 
         public override string ToString() {
             return $"{content[0]:X2}{content[1]:X2}";
+        }
+
+        public void ValSetValues(int index, byte[] bytes) {
+            this.SetValue(bytes);
+        }
+
+        public byte[] ValGetValues(int index, int howmany) {
+            return Value;            
         }
     }
 }

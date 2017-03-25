@@ -112,7 +112,6 @@ namespace DebugReloaded.Interface {
             }
         }
 
-
         public CommandInterpreter(ApplicationContext context) {
             this.context = context;
         }

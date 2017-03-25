@@ -32,5 +32,19 @@ namespace DebugReloaded.Support {
         public ApplicationContext() {
             Interpreter = new CommandInterpreter(this);
         }
+
+        public (IValuable container, int index) GetLocationFromString(string str) {
+            Register rg = this.GetRegisterByName(str);
+
+            if (rg != null)
+                return (rg, -1);
+
+            var mem = Memory.IsMemoryAddress(str);
+
+            if (mem.isMemory) 
+                return (this.mainMemory, mem.location);
+
+            return (null, int.Parse(str));
+        }
     }
 }
