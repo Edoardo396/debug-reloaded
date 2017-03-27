@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DebugReloaded.Commands;
 using DebugReloaded.Containers;
 using DebugReloaded.Interface;
 
@@ -25,6 +26,8 @@ namespace DebugReloaded.Support {
             new Register("ds")
         };
 
+        public List<Command> Program = new List<Command>();
+
         public Register GetRegisterByName(string name) {
             return Registers.Find(r => r.Name == name);
         }
@@ -32,7 +35,8 @@ namespace DebugReloaded.Support {
         public ApplicationContext() {
             Interpreter = new CommandInterpreter(this);
         }
-
+        
+        /*
         public (IValuable container, int index) GetLocationFromString(string str) {
             Register rg = this.GetRegisterByName(str);
 
@@ -45,6 +49,6 @@ namespace DebugReloaded.Support {
                 return (this.mainMemory, mem.location);
 
             return (null, int.Parse(str));
-        }
+        }*/
     }
 }

@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DebugReloaded.Containers {
-    public class Register : IValuable {
+    public class Register : IMemorizable {
+
         private byte[] content = new byte[2] {0x00, 0x00};
 
         public string Name { get; set; } = null;
@@ -22,7 +23,12 @@ namespace DebugReloaded.Containers {
 
         public byte[] Value => content;
 
-        public void SetValue(byte[] bytes) {
+        public void SetValue(byte[] _bytes) {
+
+            byte[] bytes = new byte[2];
+
+            bytes = _bytes.Length == 1 ? new byte[] { 0, _bytes[0] } : _bytes;
+
             if (bytes.Length != 2)
                 throw new BadRegisterException(this, bytes, "Cannot insert more than 2 bytes in a register");
 
@@ -54,12 +60,20 @@ namespace DebugReloaded.Containers {
             return $"{content[0]:X2}{content[1]:X2}";
         }
 
-        public void ValSetValues(int index, byte[] bytes) {
-            this.SetValue(bytes);
+        public void SetValues(int index, byte[] value) {
+
+            byte[] bytes = new byte[2];
+
+            bytes = value.Length == 1 ? new byte[] { 0, value[0] } : value;
+
+            if (bytes.Length != 2)
+                throw new BadRegisterException(this, value, "Register is 2 bytes only!");
+
+            this.SetValue(value);
         }
 
-        public byte[] ValGetValues(int index, int howmany) {
-            return Value;            
+        public byte[] GetValues(int index = 0, int howmany = 0) {
+            return this.Value;
         }
     }
 }

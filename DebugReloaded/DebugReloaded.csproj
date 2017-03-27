@@ -45,9 +45,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\AddCommand.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\MovCommand.cs" />
-    <Compile Include="Containers\IValuable.cs" />
+    <Compile Include="Containers\IMemorizable.cs" />
     <Compile Include="Support\BadRegisterException.cs" />
     <Compile Include="Interface\CommandInterpreter.cs" />
     <Compile Include="Interface\DebugCommand.cs" />

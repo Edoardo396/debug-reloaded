@@ -2,13 +2,15 @@
 using System.Linq;
 
 namespace DebugReloaded.Containers {
-    public class Memory : IValuable {
+    public class Memory  : IMemorizable {
 
         private byte[] content;
 
         public string Name { get; set; }
 
         public byte this[int index] => this.GetValue(index);
+
+        public int Size => content.Length;
 
         public Memory(int byteSize) {
             content = new byte[byteSize];
@@ -41,15 +43,6 @@ namespace DebugReloaded.Containers {
             for (int i = 0; i < bytes.Length; i++)
                 content[i + index] = bytes[i];
         }
-
-        public void ValSetValues(int index, byte[] bytes) {
-            this.SetValuesLE(index, bytes);
-        }
-
-        public byte[] ValGetValues(int index, int howmany) {
-            return GetValuesLE(index);
-   ;     }
-
 
         public void SetValue(int index, byte value) {
             SetValues(index, new[] {value});

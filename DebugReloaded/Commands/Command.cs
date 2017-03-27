@@ -27,5 +27,21 @@ namespace DebugReloaded.Commands {
 
         public abstract void Execute(ApplicationContext context);
         public abstract byte[] CovertToMachineLanguage();
+
+        public static Command Parse(string s) {
+
+            string cmd = s.Split(' ')[0];
+            string parameters = s.Split(' ')[1];
+
+            switch (cmd) {
+                case "mov": return new MovCommand(parameters.Split(',').ToList());
+            }
+
+
+
+            return null;
+        }
+
+
     }
 }

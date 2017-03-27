@@ -1,27 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Configuration;
 using DebugReloaded.Containers;
 using DebugReloaded.Support;
 
 namespace DebugReloaded.Commands {
-    public class MovCommand : Command {
-        public override string Name => "mov";
+    public class AddCommand : Command {
 
-        public MovCommand(List<string> parameters) : this(parameters, null) {
-        }
+        public override string Name => "add";
 
-        public MovCommand(params string[] parameters) : base(parameters) {
+        public AddCommand(List<string> parameters) : base(parameters) {
 
         }
 
-        public MovCommand(List<string> parameters, byte[] byteCodes) : base(parameters, byteCodes) {
+        public AddCommand(params string[] parameters) : base(parameters) {
+
+        }
+
+        public AddCommand(List<string> parameters, byte[] byteCodes) : base(parameters, byteCodes) {
+
         }
 
         public override void Execute(ApplicationContext context) {
 
-            // TODO Indexed reference is missing
+            
 
             
         }

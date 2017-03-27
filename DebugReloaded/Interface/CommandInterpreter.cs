@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DebugReloaded.Commands;
 using DebugReloaded.Containers;
 using DebugReloaded.Support;
 
@@ -40,6 +41,44 @@ namespace DebugReloaded.Interface {
                     else
                         ECommand(debugCommand.Parameters);
                     break;
+                case "a":
+                    if (inputs.Length != 0)
+                        ACommand(debugCommand.Parameters, inputs[0], inputs[0]);
+                    else
+                        ACommand(debugCommand.Parameters);
+                    break;
+                case "g":
+                    if (inputs.Length != 0)
+                        GCommand(debugCommand.Parameters, inputs[0], inputs[0]);
+                    else
+                        GCommand(debugCommand.Parameters);
+                    break;
+
+            }
+        }
+
+        private void GCommand(List<string> debugCommandParameters, params string[] input) {
+
+            foreach (Command command in context.Program) {
+                command.Execute(context);
+                RCommand(new List<string>());
+            }
+      
+        }
+
+        private void ACommand(List<string> parameters, params string[] inputs) {
+            // TODO Code MUST be in memory TOO
+
+            if (inputs.Length != 0)
+                foreach (var input in inputs)
+                    context.Program.Add(Command.Parse(input));
+            else {
+                while (true) {
+                    string str = MySupport.CWR("Command => ");
+                    if (str == "")
+                        break;
+                    context.Program.Add(Command.Parse(str));
+                }
             }
         }
 
@@ -53,10 +92,11 @@ namespace DebugReloaded.Interface {
 
             int location = int.Parse(parameters[0]);
 
-            Console.Write($"{location}h : {context.mainMemory.Dump(location,1)} => ");
+            Console.Write($"{location}h : {context.mainMemory.Dump(location, 1)} => ");
 
             try {
-                context.mainMemory.SetValues(location, MySupport.GetBytesArrayFromString(inputs.Length == 0 ? Console.ReadLine() : inputs[0]));
+                context.mainMemory.SetValues(location,
+                    MySupport.GetBytesArrayFromString(inputs.Length == 0 ? Console.ReadLine() : inputs[0]));
             } catch (Exception e) {
                 Console.WriteLine("Error while inserting data: " + e.Message);
             }
