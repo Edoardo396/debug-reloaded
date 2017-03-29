@@ -11,7 +11,7 @@ namespace DebugTests {
     public class CommandsTests {
 
 
-        [TestMethod]
+
         public void MovTestMemToReg() {
 
             context.mainMemory.SetValues(100, new byte[] {0xff,0xee} );
@@ -31,7 +31,7 @@ namespace DebugTests {
             Assert.IsTrue(context.GetRegisterByName("ax").ToString() == "6607");
         }
 
-        [TestMethod]
+
         public void MovTestRegToMem() {
 
             context.GetRegisterByName("ax").SetValue("DDAA");
@@ -43,7 +43,7 @@ namespace DebugTests {
             Assert.IsTrue(context.mainMemory.Dump(100, 2) == "AA-DD");
         }
 
-        [TestMethod]
+
         public void MovTestImmToMem() {
 
             MovCommand cmd = new MovCommand("[100]", "100");

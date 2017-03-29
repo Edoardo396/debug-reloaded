@@ -46,9 +46,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\AddCommand.cs" />
+    <Compile Include="Commands\AddressMode.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\MovCommand.cs" />
+    <Compile Include="Containers\Flag.cs" />
     <Compile Include="Containers\IMemorizable.cs" />
+    <Compile Include="Containers\MemoryRangePointer.cs" />
+    <Compile Include="Support\Assembler.cs" />
     <Compile Include="Support\BadRegisterException.cs" />
     <Compile Include="Interface\CommandInterpreter.cs" />
     <Compile Include="Interface\DebugCommand.cs" />

@@ -75,5 +75,9 @@ namespace DebugReloaded.Containers {
         public byte[] GetValues(int index = 0, int howmany = 0) {
             return this.Value;
         }
+
+        public MemoryRangePointer ExtractMemoryPointer(int index, int howmany) {
+            return new MemoryRangePointer(this, index,howmany);
+        }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 namespace DebugReloaded.Containers {
     public class Memory  : IMemorizable {
 
-        private byte[] content;
+        protected byte[] content;
 
         public string Name { get; set; }
 
@@ -39,12 +39,12 @@ namespace DebugReloaded.Containers {
             return this.GetValues(index, 1)[0];
         }
 
-        public void SetValues(int index, byte[] bytes) {
+        public virtual void SetValues(int index, byte[] bytes) {
             for (int i = 0; i < bytes.Length; i++)
                 content[i + index] = bytes[i];
         }
 
-        public void SetValue(int index, byte value) {
+        public virtual void SetValue(int index, byte value) {
             SetValues(index, new[] {value});
         }
 
@@ -57,6 +57,10 @@ namespace DebugReloaded.Containers {
             str = str.Remove(str.Length - 1);
 
             return str;
+        }
+
+        public MemoryRangePointer ExtractMemoryPointer(int index, int howmany) {
+            return new MemoryRangePointer(this, index, howmany);
         }
 
         public string Dump() {
@@ -85,13 +89,6 @@ namespace DebugReloaded.Containers {
             byte[] bytes = this.GetValues(startindex, howmany);
 
             return new Memory(bytes);
-        }
-
-        // I USE TUPLES
-        public static (bool isMemory, int location) IsMemoryAddress(string value) {
-            int loc = -1;
-            bool isMem = value.StartsWith("[") && value.EndsWith("]") && int.TryParse(value.Substring(1, value.Length - 2), out loc);
-            return (isMem, loc);
         }
 
     }

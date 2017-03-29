@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Net.Configuration;
 using DebugReloaded.Containers;
@@ -27,7 +28,15 @@ namespace DebugReloaded.Commands {
         }
 
         public override byte[] CovertToMachineLanguage() {
-            throw new System.NotImplementedException();
+
+            byte[] bytes = new byte[2];
+            throw new RowNotInTableException();
+
+
+
+
+
+
         }
     }
 }
