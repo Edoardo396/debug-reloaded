@@ -10,50 +10,50 @@ namespace DebugTests {
     [TestClass]
     public class CommandsTests {
 
-
-
-        public void MovTestMemToReg() {
-
-            context.mainMemory.SetValues(100, new byte[] {0xff,0xee} );
-
-            MovCommand cmd = new MovCommand(new List<string>() {"ax","[100]"});
-
-            cmd.Execute(context);
-
-            Assert.IsTrue(context.GetRegisterByName("ax").ToString() == "EEFF");
-
-            context.mainMemory.SetValues(300, new byte[] { 0x07, 0x66});
-
-            MovCommand cmd2 = new MovCommand(new List<string>() { "ax", "[300]" });
-
-            cmd2.Execute(context);
-
-            Assert.IsTrue(context.GetRegisterByName("ax").ToString() == "6607");
-        }
-
-
-        public void MovTestRegToMem() {
-
-            context.GetRegisterByName("ax").SetValue("DDAA");
+        [TestMethod]
+        public void DefaultAssembleableCommandTestMOV() {
             
-            MovCommand cmd = new MovCommand("[100]", "ax");
+            var cmd = new AssemblableCommand(context, "mov ax,bx");
 
-            cmd.Execute(context);
+            cmd.Assemble();
 
-            Assert.IsTrue(context.mainMemory.Dump(100, 2) == "AA-DD");
+            context.mainMemory.SetValues(300, cmd.Assemble());
+
+            Assert.IsTrue(context.mainMemory.Dump(300,2) == "89-D8");
         }
 
 
-        public void MovTestImmToMem() {
+        [TestMethod]
+        public void ImmediateAssembleableCommandTestMOV() {
 
-            MovCommand cmd = new MovCommand("[100]", "100");
+            var cmd = new AssemblableCommand(context, "mov ax,0001");
 
-            cmd.Execute(context);
+            context.mainMemory.SetValues(300, cmd.Assemble());
 
-            Assert.IsTrue(context.mainMemory.Dump(100, 2) == "64-00");
+            Assert.IsTrue(context.mainMemory.Dump(300, 3) == "B8-01-00");
         }
 
+        [TestMethod]
+        public void ImmediateAssembleableCommandTestSIMOV() {
+
+            var cmd = new AssemblableCommand(context, "mov si,B7");
+
+            context.mainMemory.SetValues(300, cmd.Assemble());
+
+            Assert.IsTrue(context.mainMemory.Dump(300, 3) == "BE-B7-00");
+        }
+
+        [TestMethod]
+        public void MemoryAssembleableCommandTestMOV() {
+
+            var cmd = new AssemblableCommand(context, "mov ax,[100]");
+
+            context.mainMemory.SetValues(300, cmd.Assemble());
+
+            Assert.IsTrue(context.mainMemory.Dump(300, 3) == "A1-00-01");
+        }
 
 
     }
+
 }

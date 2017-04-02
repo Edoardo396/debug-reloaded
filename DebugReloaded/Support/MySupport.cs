@@ -14,6 +14,16 @@ namespace DebugReloaded.Support {
             return Console.ReadLine();
         }
 
+        public static void NormalizeValueString(ref string str) {
+
+            if (str.Length % 2 == 0)
+                return;
+
+            while (str.Length % 2 != 0)
+                str = "0" + str;
+
+        }
+
         public static byte[] GetBytesArrayFromString(string sbytes) {
             return
                 Enumerable.Range(0, sbytes.Length)

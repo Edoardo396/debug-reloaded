@@ -10,7 +10,7 @@ using DebugReloaded.Support;
 namespace DebugReloaded.Interface {
     public class CommandInterpreter {
 
-        private ApplicationContext context;
+        private readonly ApplicationContext context;
 
         public void WaitForCommands() {
             while (true) {
@@ -56,30 +56,16 @@ namespace DebugReloaded.Interface {
 
             }
         }
-
+        
         private void GCommand(List<string> debugCommandParameters, params string[] input) {
 
-            foreach (Command command in context.Program) {
-                command.Execute(context);
-                RCommand(new List<string>());
-            }
       
         }
 
         private void ACommand(List<string> parameters, params string[] inputs) {
             // TODO Code MUST be in memory TOO
 
-            if (inputs.Length != 0)
-                foreach (var input in inputs)
-                    context.Program.Add(Command.Parse(input));
-            else {
-                while (true) {
-                    string str = MySupport.CWR("Command => ");
-                    if (str == "")
-                        break;
-                    context.Program.Add(Command.Parse(str));
-                }
-            }
+
         }
 
         private void ECommand(List<string> parameters, params string[] inputs) {
