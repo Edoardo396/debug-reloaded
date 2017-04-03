@@ -76,6 +76,7 @@
     <Compile Include="Containers\Flag.cs" />
     <Compile Include="Containers\IMemorizable.cs" />
     <Compile Include="Containers\MemoryRangePointer.cs" />
+    <Compile Include="Interface\ConsoleLogger.cs" />
     <Compile Include="Support\Assembler.cs" />
     <Compile Include="Support\BadRegisterException.cs" />
     <Compile Include="Interface\CommandInterpreter.cs" />

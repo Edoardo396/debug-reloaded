@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Xml.Linq;
+using DebugReloaded.Interface;
 using DebugReloaded.Support;
 
 namespace DebugReloaded.Commands {
@@ -96,6 +97,11 @@ namespace DebugReloaded.Commands {
         }
         public static List<CommandTemplate> GetCommandsFromXML(XDocument doc) {
             List<CommandTemplate> commands = new List<CommandTemplate>();
+
+            Version DBVersion = Version.Parse(doc.Element("database").Element("apptarget").Value);
+
+            if(ApplicationContext.AppVersion < DBVersion)
+                ConsoleLogger.Write("La versione del database in uso è maggiore della versione dell'Applicazione, questo potrebbe portare al fatto che alcuni comandi potrebbero essere assemblabili ma non eseguibili.", "WARNING", ConsoleColor.DarkYellow);
 
             var commandsNode = doc.Element("database").Element("Commands");
 

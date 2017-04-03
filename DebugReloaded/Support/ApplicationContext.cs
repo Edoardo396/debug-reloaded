@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Reflection;
 using System.Xml.Linq;
 using DebugReloaded.Commands;
 using DebugReloaded.Containers;
@@ -11,7 +10,11 @@ using DebugReloaded.Interface;
 namespace DebugReloaded.Support {
     public class ApplicationContext {
 
-        public bool Verbose = true;
+        public static Version AppVersion
+            => AssemblyName.GetAssemblyName(System.Reflection.Assembly.GetExecutingAssembly().Location).Version;
+          //  => Version.Parse(FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).FileVersion);
+
+        public static readonly bool Verbose = true;
 
         public static readonly XDocument doc = XDocument.Load(@"C:\Users\edoardo.fullin\OneDrive\Programmazione\C#\DebugReloaded\DebugReloaded\Commands\AssemblyCommands.xml");
 
