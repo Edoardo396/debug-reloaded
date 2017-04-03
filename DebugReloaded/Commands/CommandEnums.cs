@@ -2,7 +2,7 @@
 
     public enum DataType {
         
-        Register8, Register16, Memory8, Memory16, Immediate8, Immediate16, Flag
+        Register8, Register16, Memory8, Memory16, Immediate8, Immediate16, Flag, None
 
     }
 

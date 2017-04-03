@@ -65,6 +65,8 @@ namespace DebugReloaded.Commands {
                     return DataType.Memory8;
                 case "m16":
                     return DataType.Memory16;
+                case "none":
+                    return DataType.None;
                 default:
                     throw new ArgumentException("type not found");
             }
@@ -86,6 +88,8 @@ namespace DebugReloaded.Commands {
                     return "i16";
                 case DataType.Flag:
                     return "f";
+                case DataType.None:
+                    return "none";
                 default:
                     throw new ArgumentException("type not found");
             }

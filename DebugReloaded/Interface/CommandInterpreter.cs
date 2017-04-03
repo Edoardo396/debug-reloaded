@@ -63,8 +63,32 @@ namespace DebugReloaded.Interface {
         }
 
         private void ACommand(List<string> parameters, params string[] inputs) {
-            // TODO Code MUST be in memory TOO
 
+            if (parameters.Count != 1)
+                return;
+
+            int index = int.Parse(parameters[0]);
+
+            while (true) {
+
+                string buffer = MySupport.CWR($"{index} => ");
+
+                if (buffer == string.Empty)
+                    break;
+
+                byte[] bytes;
+
+                try {
+                    var cmd = new AssemblableCommand(context, buffer);
+                    bytes = cmd.Assemble();
+                    context.mainMemory.SetValues(index, bytes);
+                } catch (Exception e) {
+                    Console.WriteLine("Errore: " + e.Message);
+                    continue;
+                }
+                        
+                index += bytes.Length;
+            }
 
         }
 

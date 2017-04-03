@@ -11,9 +11,8 @@ namespace DebugReloaded.Commands {
 
         private ApplicationContext context;
 
-        private DataType[] parmsDT;
-        private string[] parmsDTS;
-        private string[] parms;
+        private DataType[] parmsDt;
+        private readonly string[] parms;
 
         public AssemblableCommand(CommandTemplate cmd) {
             selectedCommand = cmd;
@@ -25,31 +24,29 @@ namespace DebugReloaded.Commands {
             string cmd = instruct.Split((char) 32)[0];
             parms = instruct.Split((char) 32)[1].Split(',');
 
-            parmsDT = new DataType[2];
+            parmsDt = new DataType[2] {DataType.None, DataType.None};
 
             for (var i = 0; i < parms.Length; i++)
-                parmsDT[i] = CommandTemplate.GetDTFromArgument(parms[i]);
+                parmsDt[i] = CommandTemplate.GetDTFromArgument(parms[i]);
 
-            parmsDTS = new string[2];
+            var parmsDts = new string[2];
 
             for (var i = 0; i < parms.Length; i++)
-                parmsDTS[i] = CommandTemplate.DataTypeToString(parmsDT[i]);
-
-//            selectedCommand = context.CommandTemplList.Find(
-//                c => c.Name == cmd.Replace(" ", "") &&
-//                    c.ParTypes.SequenceEqual(parmsDT) &&
-//                    (c.ParSpecific.SequenceEqual(parms) || (c.ParSpecific[0] == "any" && c.ParSpecific[1] == "any")));
+                parmsDts[i] = CommandTemplate.DataTypeToString(parmsDt[i]);
 
             selectedCommand =
                 context.CommandTemplList.Find(
                     c =>
-                        c.Name == cmd.Replace(" ", "") && c.ParTypes.SequenceEqual(parmsDT) &&
-                        (c.ParSpecific[0] == parms[0] || c.ParSpecific[0] == "any") &&
-                        (c.ParSpecific[1] == parms[1] || c.ParSpecific[1] == "any"));
+                        c.Name == cmd.Replace(" ", "") && c.ParTypes.SequenceEqual(parmsDt) &&
+                        this.CheckParSpecific(c, parms));
 
 
             if (selectedCommand == null)
-                throw new Exception("No Command matching  criteria.");
+                throw new Exception("No Command matching criteria.");
+        }
+
+        private bool CheckParSpecific(CommandTemplate c, string[] par) {
+            return !par.Where((t, i) => c.ParSpecific[i] != t && c.ParSpecific[i] != "any").Any();
         }
 
         public string Disassemble() {
@@ -57,9 +54,6 @@ namespace DebugReloaded.Commands {
         }
 
         public byte[] Assemble() {
-
-            byte[] final;
-
             string GetParameter(string content) {
                 if (content == "op1")
                     return this.parms[0];
@@ -88,20 +82,24 @@ namespace DebugReloaded.Commands {
 
             string format = selectedCommand.OpCode.Substring(points + 3, last_dollar - (points + 3));
 
-            string parms = GetParameter(fpar).Replace("[","").Replace("]", "");
+            string parms = GetParameter(fpar).Replace("[", "").Replace("]", "");
 
             MySupport.NormalizeValueString(ref parms);
 
             byte[] paramsBytes = MySupport.GetBytesArrayFromString(parms);
 
+            if (paramsBytes.Length != 1 && paramsBytes.Length != 2)
+                throw new Exception("Immediate params lenght must be a byte or a word.");
+
             if (format == "le")
                 paramsBytes = paramsBytes.Reverse().ToArray();
 
-            final =
+            byte[] final =
                 MySupport.GetBytesArrayFromString(selectedCommand.OpCode.Substring(0, first_dollar))
-                    .Concat(paramsBytes).ToArray();
+                    .Concat(paramsBytes)
+                    .ToArray();
 
-                
+
             return final;
         }
     }
