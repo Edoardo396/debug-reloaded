@@ -49,10 +49,6 @@ namespace DebugReloaded.Commands {
             return !par.Where((t, i) => c.ParSpecific[i] != t && c.ParSpecific[i] != "any").Any();
         }
 
-        public string Disassemble() {
-            throw new System.NotImplementedException();
-        }
-
         public byte[] Assemble() {
             string GetParameter(string content) {
                 if (content == "op1")

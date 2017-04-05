@@ -71,13 +71,13 @@
   <ItemGroup>
     <Compile Include="Commands\Assemblable.cs" />
     <Compile Include="Commands\AssemblableCommand.cs" />
+    <Compile Include="Commands\Assembler.cs" />
     <Compile Include="Commands\CommandEnums.cs" />
     <Compile Include="Commands\CommandTemplate.cs" />
     <Compile Include="Containers\Flag.cs" />
     <Compile Include="Containers\IMemorizable.cs" />
     <Compile Include="Containers\MemoryRangePointer.cs" />
     <Compile Include="Interface\ConsoleLogger.cs" />
-    <Compile Include="Support\Assembler.cs" />
     <Compile Include="Support\BadRegisterException.cs" />
     <Compile Include="Interface\CommandInterpreter.cs" />
     <Compile Include="Interface\DebugCommand.cs" />

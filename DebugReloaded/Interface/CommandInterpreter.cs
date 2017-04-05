@@ -79,8 +79,7 @@ namespace DebugReloaded.Interface {
                 byte[] bytes;
 
                 try {
-                    var cmd = new AssemblableCommand(context, buffer);
-                    bytes = cmd.Assemble();
+                    bytes = context.CommandAssembler.Assemble(buffer);
                     context.mainMemory.SetValues(index, bytes);
                 } catch (Exception e) {
                     Console.WriteLine("Errore: " + e.Message);

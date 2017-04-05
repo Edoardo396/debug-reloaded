@@ -26,6 +26,8 @@ namespace DebugReloaded.Support {
 
         public CommandInterpreter Interpreter;
 
+        public Assembler CommandAssembler;
+
         public List<Register> Registers { get; } = new List<Register>() {
             new Register("ax"),
             new Register("bx"),
@@ -45,6 +47,7 @@ namespace DebugReloaded.Support {
 
         public ApplicationContext() {
             Interpreter = new CommandInterpreter(this);
+            CommandAssembler = new Assembler(this);
             // TODO REPLACE WITH PARAMS
             CommandTemplate.ctx = this;
             CommandTemplList = CommandTemplate.GetCommandsFromXML(doc);

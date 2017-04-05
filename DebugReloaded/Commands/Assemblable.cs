@@ -3,6 +3,9 @@
 namespace DebugReloaded.Commands {
     public interface Assemblable {
         byte[] Assemble();   
-        string Disassemble();
+    }
+
+    public interface Disassemblable {
+        byte[] Disassemble();
     }
 }
