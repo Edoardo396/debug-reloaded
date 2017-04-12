@@ -4,9 +4,11 @@ using System.Linq;
 using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
 using DebugReloaded.Support;
+using Microsoft.SqlServer.Server;
 
 namespace DebugReloaded.Commands {
     public class AssemblableCommand : Assemblable {
+
         private CommandTemplate selectedCommand;
 
         private ApplicationContext context;
@@ -50,53 +52,54 @@ namespace DebugReloaded.Commands {
         }
 
         public byte[] Assemble() {
+
+            // IMPLEMENT WORD PTR BYTE PTR
+
             string GetParameter(string content) {
                 if (content == "op1")
                     return this.parms[0];
                 return content == "op2" ? this.parms[1] : "";
             }
 
-            int first_dollar = selectedCommand.OpCode.IndexOf("$");
+            string parseStr = selectedCommand.OpCode;
 
-            if (first_dollar == -1)
-                return MySupport.GetBytesArrayFromString(selectedCommand.OpCode);
+            while (true) {
+                var limits = ReplaceLimits(parseStr);
 
-            int last_dollar = selectedCommand.OpCode.IndexOf("$", first_dollar + 1);
+                if (limits.Item1 == -1)
+                    break;
 
-            string dollarparameter = selectedCommand.OpCode.Substring(first_dollar, last_dollar + 1 - first_dollar);
+                string operand = parseStr.Substring(limits.Item1 + 1, limits.Item2 - limits.Item1 - 1);
 
-            int points = dollarparameter.IndexOf(":");
+                int dp = operand.IndexOf(":");
 
-            if (points == -1) {
-                string fs = selectedCommand.OpCode.Replace(dollarparameter,
-                    GetParameter(dollarparameter.Replace("$", string.Empty)));
+                string par;
 
-                return MySupport.GetBytesArrayFromString(fs);
+                if (dp == -1)
+                    par = GetParameter(operand);
+                else {
+
+                    par = GetParameter(operand.Substring(0, dp));
+
+                    string val = par.Replace("[", "").Replace("]", "");
+                    MySupport.NormalizeValueString(ref val);
+
+                    byte[] parBytes = MySupport.GetBytesArrayFromString(val);
+
+                    if (operand.Substring(dp + 1, operand.Length - dp - 1) == "le")
+                        parseStr = parseStr.Replace($"${operand}$", MySupport.ByteArrayToString(parBytes.Reverse().ToArray()));
+                    else
+                        parseStr = parseStr.Replace(operand, MySupport.ByteArrayToString(parBytes.ToArray()));
+                }
             }
 
-            string fpar = selectedCommand.OpCode.Substring(first_dollar + 1, points - first_dollar + 1);
 
-            string format = selectedCommand.OpCode.Substring(points + 3, last_dollar - (points + 3));
+            return MySupport.GetBytesArrayFromString(parseStr);
+        }
 
-            string parms = GetParameter(fpar).Replace("[", "").Replace("]", "");
-
-            MySupport.NormalizeValueString(ref parms);
-
-            byte[] paramsBytes = MySupport.GetBytesArrayFromString(parms);
-
-            if (paramsBytes.Length != 1 && paramsBytes.Length != 2)
-                throw new Exception("Immediate params lenght must be a byte or a word.");
-
-            if (format == "le")
-                paramsBytes = paramsBytes.Reverse().ToArray();
-
-            byte[] final =
-                MySupport.GetBytesArrayFromString(selectedCommand.OpCode.Substring(0, first_dollar))
-                    .Concat(paramsBytes)
-                    .ToArray();
-
-
-            return final;
+        private Tuple<int, int> ReplaceLimits(string opCode) {
+            int i1 = opCode.IndexOf("$");
+            return new Tuple<int, int>(i1, opCode.IndexOf("$", i1 + 1));
         }
     }
 }

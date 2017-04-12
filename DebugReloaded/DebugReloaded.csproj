@@ -74,8 +74,10 @@
     <Compile Include="Commands\Assembler.cs" />
     <Compile Include="Commands\CommandEnums.cs" />
     <Compile Include="Commands\CommandTemplate.cs" />
+    <Compile Include="Commands\Disassembler.cs" />
     <Compile Include="Containers\Flag.cs" />
     <Compile Include="Containers\IMemorizable.cs" />
+    <Compile Include="Containers\ImmediateNumber.cs" />
     <Compile Include="Containers\MemoryRangePointer.cs" />
     <Compile Include="Interface\ConsoleLogger.cs" />
     <Compile Include="Support\BadRegisterException.cs" />

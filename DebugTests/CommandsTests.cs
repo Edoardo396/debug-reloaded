@@ -17,9 +17,9 @@ namespace DebugTests {
 
             cmd.Assemble();
 
-            context.mainMemory.SetValues(300, cmd.Assemble());
+            context.MainMemory.SetValues(300, cmd.Assemble());
 
-            Assert.IsTrue(context.mainMemory.Dump(300,2) == "89-D8");
+            Assert.IsTrue(context.MainMemory.Dump(300,2) == "89-D8");
         }
 
 
@@ -28,9 +28,9 @@ namespace DebugTests {
 
             var cmd = new AssemblableCommand(context, "mov ax,0001");
 
-            context.mainMemory.SetValues(300, cmd.Assemble());
+            context.MainMemory.SetValues(300, cmd.Assemble());
 
-            Assert.IsTrue(context.mainMemory.Dump(300, 3) == "B8-01-00");
+            Assert.IsTrue(context.MainMemory.Dump(300, 3) == "B8-01-00");
         }
 
         [TestMethod]
@@ -38,9 +38,19 @@ namespace DebugTests {
 
             var cmd = new AssemblableCommand(context, "mov si,B7");
 
-            context.mainMemory.SetValues(300, cmd.Assemble());
+            context.MainMemory.SetValues(300, cmd.Assemble());
 
-            Assert.IsTrue(context.mainMemory.Dump(300, 3) == "BE-B7-00");
+            Assert.IsTrue(context.MainMemory.Dump(300, 3) == "BE-B7-00");
+        }
+
+        [TestMethod]
+        public void ImmediateMemoryCommandTestMOV() {
+
+           var cmd = new AssemblableCommand(context, "mov [0123],00FF");
+
+            context.MainMemory.SetValues(300, cmd.Assemble());
+
+            Assert.IsTrue(context.MainMemory.Dump(300, 6) == "C7-06-23-01-FF-00");
         }
 
         [TestMethod]
@@ -48,9 +58,9 @@ namespace DebugTests {
 
             var cmd = new AssemblableCommand(context, "mov ax,[100]");
 
-            context.mainMemory.SetValues(300, cmd.Assemble());
+            context.MainMemory.SetValues(300, cmd.Assemble());
 
-            Assert.IsTrue(context.mainMemory.Dump(300, 3) == "A1-00-01");
+            Assert.IsTrue(context.MainMemory.Dump(300, 3) == "A1-00-01");
         }
 
 

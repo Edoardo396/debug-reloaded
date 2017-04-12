@@ -37,7 +37,7 @@ namespace DebugTests {
             context.Interpreter.ExecuteCommand(new DebugCommand("e 100"), "aabbccddeeff");
 
 
-            Assert.IsTrue(context.mainMemory.Dump(100, 6) == "AA-BB-CC-DD-EE-FF");
+            Assert.IsTrue(context.MainMemory.Dump(100, 6) == "AA-BB-CC-DD-EE-FF");
         }
 
 

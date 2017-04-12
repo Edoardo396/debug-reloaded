@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace DebugReloaded.Containers {
     public class MemoryRangePointer : Memory {
+
         private readonly IMemorizable originalMemory;
 
         public bool AutoUpdate { get; set; } = true;

@@ -22,7 +22,7 @@ namespace DebugReloaded.Support {
 
         public List<CommandTemplate> CommandTemplList { get; }
 
-        public Memory mainMemory = new Memory(memSize);
+        public Memory MainMemory = new Memory(memSize);
 
         public CommandInterpreter Interpreter;
 

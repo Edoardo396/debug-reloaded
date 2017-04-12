@@ -13,9 +13,9 @@ namespace DebugTests {
         [TestMethod()]
         public void MemoryRangePointerTest() {
 
-            context.mainMemory.SetValues(100, new byte[] {0xff, 0x55, 0x21, 0b10001, 0xab});
+            context.MainMemory.SetValues(100, new byte[] {0xff, 0x55, 0x21, 0b10001, 0xab});
 
-            MemoryRangePointer pointer = context.mainMemory.ExtractMemoryPointer(100, 5);
+            MemoryRangePointer pointer = context.MainMemory.ExtractMemoryPointer(100, 5);
 
             pointer.SetValue(2, 0x00);
         }
@@ -23,15 +23,15 @@ namespace DebugTests {
         [TestMethod()]
         public void UpdateTest() {
 
-            context.mainMemory.SetValues(100, new byte[] { 0xff, 0x55, 0x21, 0b10001, 0xab });
+            context.MainMemory.SetValues(100, new byte[] { 0xff, 0x55, 0x21, 0b10001, 0xab });
 
-            MemoryRangePointer pointer = context.mainMemory.ExtractMemoryPointer(100, 5);
+            MemoryRangePointer pointer = context.MainMemory.ExtractMemoryPointer(100, 5);
 
             pointer[4] = 0x50;
 
             pointer.SetValue(2, 0x00);
 
-            Assert.IsTrue(context.mainMemory[102] == (byte)0 && context.mainMemory[104] == (byte)80);
+            Assert.IsTrue(context.MainMemory[102] == (byte)0 && context.MainMemory[104] == (byte)80);
         }
     }
 }

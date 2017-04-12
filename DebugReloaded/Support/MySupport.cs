@@ -24,6 +24,11 @@ namespace DebugReloaded.Support {
 
         }
 
+        public static string ByteArrayToString(byte[] ba) {
+            string hex = BitConverter.ToString(ba);
+            return hex.Replace("-", "");
+        }
+
         public static byte[] GetBytesArrayFromString(string sbytes) {
             return
                 Enumerable.Range(0, sbytes.Length)

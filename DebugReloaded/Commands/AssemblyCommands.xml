@@ -29,6 +29,9 @@
     <command name="mov" op1="r16" op1spec="cx" op2="m16" op2spec="any" opcode="8B0E$op2:le$" />
     <command name="mov" op1="r16" op1spec="si" op2="m16" op2spec="any" opcode="8B36$op2:le$" />
     
+    <!-- Move Command MEM / IMM -->
+    <command name="mov" op1="m16" op1spec="any" op2="i16" op2spec="any" opcode="C706$op1:le$$op2:le$" />
+    
     <!-- Increment Commands REG -->
     <command name="inc" op1="r16" op1spec="ax" op2="none" op2spec="any" opcode="40" />
     <command name="inc" op1="r16" op1spec="bx" op2="none" op2spec="any" opcode="43" />

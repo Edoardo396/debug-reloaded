@@ -10,7 +10,7 @@ namespace DebugReloaded.Containers {
 
         public byte this[int index] => this.GetValue(index);
 
-        public int Size => content.Length;
+        public int Length => content.Length;
 
         public Memory(int byteSize) {
             content = new byte[byteSize];

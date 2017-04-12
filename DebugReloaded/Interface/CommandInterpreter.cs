@@ -80,7 +80,7 @@ namespace DebugReloaded.Interface {
 
                 try {
                     bytes = context.CommandAssembler.Assemble(buffer);
-                    context.mainMemory.SetValues(index, bytes);
+                    context.MainMemory.SetValues(index, bytes);
                 } catch (Exception e) {
                     Console.WriteLine("Errore: " + e.Message);
                     continue;
@@ -101,10 +101,10 @@ namespace DebugReloaded.Interface {
 
             int location = int.Parse(parameters[0]);
 
-            Console.Write($"{location}h : {context.mainMemory.Dump(location, 1)} => ");
+            Console.Write($"{location}h : {context.MainMemory.Dump(location, 1)} => ");
 
             try {
-                context.mainMemory.SetValues(location,
+                context.MainMemory.SetValues(location,
                     MySupport.GetBytesArrayFromString(inputs.Length == 0 ? Console.ReadLine() : inputs[0]));
             } catch (Exception e) {
                 Console.WriteLine("Error while inserting data: " + e.Message);
@@ -129,7 +129,7 @@ namespace DebugReloaded.Interface {
             Console.Write($"{loc}h" + "   ");
 
             for (int i = 0; i < 16; i++) {
-                Console.Write($"{context.mainMemory[loc]:X2}  ");
+                Console.Write($"{context.MainMemory[loc]:X2}  ");
                 loc++;
             }
 

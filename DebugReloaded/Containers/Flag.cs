@@ -4,6 +4,7 @@ using DebugReloaded.Containers;
 namespace DebugReloaded.Containers {
     public class Flag : IMemorizable {
 
+        
         public string Name { get; }
 
         public Flag() {
@@ -37,5 +38,7 @@ namespace DebugReloaded.Containers {
         public MemoryRangePointer ExtractMemoryPointer(int index, int howmany) {
             return new MemoryRangePointer(this, 0, 1);
         }
+
+        public int Length => 1;
     }
 }
