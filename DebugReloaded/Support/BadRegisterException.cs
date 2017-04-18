@@ -4,8 +4,8 @@ using System.Runtime.Serialization;
 namespace DebugReloaded.Containers {
     [Serializable]
     internal class BadRegisterException : Exception {
-        private Register register;
         private byte[] bytes;
+        private Register register;
 
         public BadRegisterException() {
         }
@@ -16,7 +16,7 @@ namespace DebugReloaded.Containers {
         public BadRegisterException(string message, Exception innerException) : base(message, innerException) {
         }
 
-        public BadRegisterException(Register register, byte[] bytes, string v) : base(message:v) {
+        public BadRegisterException(Register register, byte[] bytes, string v) : base(v) {
             this.register = register;
             this.bytes = bytes;
         }

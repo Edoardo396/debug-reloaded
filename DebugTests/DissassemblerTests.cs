@@ -1,7 +1,9 @@
 ﻿using System;
 using DebugReloaded.Commands;
 using DebugReloaded.Containers;
+using DebugReloaded.Support;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.Win32;
 
 namespace DebugTests {
     [TestClass]
@@ -67,6 +69,30 @@ namespace DebugTests {
 
             Console.WriteLine(cmd.ToString());
             Assert.IsTrue(cmd.ToString() == "mov bx,7856");
+        }
+
+        [TestMethod]
+        public void TestCommandLength() {
+
+            Memory mem = new Memory(new byte[] { 0xc7, 0x06, 0x00, 0x01, 0xaa, 0xff, 0x0, 0x87, 0x97, 0xba });
+
+            int length = Disassembler.GetCommandLength(DebugCommandsTests.context, mem);
+
+            Assert.IsTrue(length == 6);
+        }
+
+        [TestMethod]
+        public void MultipleDissasmblerTest() {
+            
+            Memory mem = new Memory(MySupport.GetBytesArrayFromString("89D889C1B8FF56404341C70600018967"));
+
+            var cmds = Disassembler.MultiCommandDisassembler(DebugCommandsTests.context, mem);
+
+            foreach (var cmd in cmds) 
+                Console.WriteLine(cmd);
+            
+
+            Assert.IsTrue(cmds.Count == 7);
         }
     }
 }

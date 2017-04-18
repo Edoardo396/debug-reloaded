@@ -2,10 +2,8 @@
 using System.Runtime.Serialization;
 
 namespace DebugReloaded.Containers {
-
     [Serializable]
     internal class BadMemoryException : Exception {
-
         private Memory memory;
         private int startIndex;
 
@@ -13,7 +11,6 @@ namespace DebugReloaded.Containers {
         }
 
         public BadMemoryException(string message) : base(message) {
-
         }
 
         public BadMemoryException(Memory memory, int startIndex, string message) : base(message) {

@@ -1,23 +1,18 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-
-namespace DebugReloaded.Containers {
+﻿namespace DebugReloaded.Containers {
     public class MemoryRangePointer : Memory {
-
         private readonly IMemorizable originalMemory;
 
         public bool AutoUpdate { get; set; } = true;
-        public int From { get; private set; }
+        public int From { get; }
         public int To { get; private set; }
 
-        
+
         public new byte this[int index] {
             get { return this.GetValues(index, 1)[0]; }
-            set { this.SetValues(index, new byte[] {value}); }
+            set { this.SetValues(index, new[] {value}); }
         }
-        
-          
-         
+
+
         public MemoryRangePointer(IMemorizable originalMemory, int from, int howmany) : base(howmany) {
             this.originalMemory = originalMemory;
             From = from;

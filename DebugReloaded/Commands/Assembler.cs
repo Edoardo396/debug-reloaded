@@ -16,12 +16,9 @@ namespace DebugReloaded.Commands {
         }
 
         public string Disassemble(byte[] bytes) {
-
-            List<CommandTemplate> cmd = context.CommandTemplList.Where(c => MySupport.GetBytesArrayFromString(c.OpCode.Substring(0,2))[0] == bytes[0]).ToList();
-
-
-
-
+            List<CommandTemplate> cmd =
+                context.CommandTemplList.Where(
+                    c => MySupport.GetBytesArrayFromString(c.OpCode.Substring(0, 2))[0] == bytes[0]).ToList();
 
 
             return string.Empty;

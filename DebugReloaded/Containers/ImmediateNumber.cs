@@ -3,8 +3,7 @@ using DebugReloaded.Interface;
 
 namespace DebugReloaded.Containers {
     public class ImmediateNumber : IMemorizable {
-
-        private byte[] content;
+        private readonly byte[] content;
 
         public ImmediateNumber(byte[] content, bool isWord) {
             if (content.Length > 2 || content.Length < 1)
@@ -13,19 +12,18 @@ namespace DebugReloaded.Containers {
 
             if (isWord && content.Length == 1)
                 content = new byte[] {0x0, content[0]};
-
         }
 
         public virtual void SetValues(int index, byte[] bytes) {
             ConsoleLogger.Write("Assigning a value to a number. Be Careful", "WARNING", ConsoleColor.Yellow);
-            for (int i = 0; i < bytes.Length; i++)
+            for (var i = 0; i < bytes.Length; i++)
                 content[i + index] = bytes[i];
         }
 
         public byte[] GetValues(int index, int howmany) {
-            byte[] bytes = new byte[howmany];
+            var bytes = new byte[howmany];
 
-            for (int i = 0; i < howmany; i++)
+            for (var i = 0; i < howmany; i++)
                 bytes[i] = content[i + index];
 
 
@@ -37,6 +35,5 @@ namespace DebugReloaded.Containers {
         }
 
         public int Length => content.Length;
-
     }
 }

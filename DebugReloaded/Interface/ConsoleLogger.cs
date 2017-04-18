@@ -1,25 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DebugReloaded.Interface {
-   public static class ConsoleLogger {
+    public static class ConsoleLogger {
+        public static void Write(object text, string type, ConsoleColor color = ConsoleColor.White) {
+            ConsoleColor oldcolor = Console.ForegroundColor;
 
-       public static void Write(object text, string type, ConsoleColor color = ConsoleColor.White) {
+            Console.ForegroundColor = color;
 
-           var oldcolor = Console.ForegroundColor;
+            Console.WriteLine($"{DateTime.Now:T} [{type}] {text}");
 
-           Console.ForegroundColor = color;
-
-            Console.WriteLine($"{DateTime.Now:T} [{type}] {text.ToString()}");
-
-           Console.ForegroundColor = oldcolor;
-       }
-
-
-
-
+            Console.ForegroundColor = oldcolor;
+        }
     }
 }

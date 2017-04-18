@@ -1,8 +1,6 @@
-﻿using System.Security.Cryptography.X509Certificates;
-
-namespace DebugReloaded.Commands {
+﻿namespace DebugReloaded.Commands {
     public interface Assemblable {
-        byte[] Assemble();   
+        byte[] Assemble();
     }
 
     public interface Disassemblable {

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DebugReloaded.Support {
     public static class MySupport {
@@ -15,13 +12,11 @@ namespace DebugReloaded.Support {
         }
 
         public static void NormalizeValueString(ref string str) {
-
             if (str.Length % 4 == 0)
                 return;
 
             while (str.Length % 4 != 0)
                 str = "0" + str;
-
         }
 
         public static string ByteArrayToString(byte[] ba) {

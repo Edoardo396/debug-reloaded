@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Threading;
 using System.Xml.Linq;
 using DebugReloaded.Interface;
 using DebugReloaded.Support;
 
 namespace DebugReloaded.Commands {
     public class CommandTemplate {
-
+        public static readonly CommandTemplate UNKNOWN = new CommandTemplate("????",
+            new[] {DataType.None, DataType.None}, new[] {"any", "any"}, "FF");
 
         public static ApplicationContext ctx;
         public string Name { get; private set; }
-        public DataType[] ParTypes { get; private set; }
+        public DataType[] ParTypes { get; }
         public string[] ParSpecific { get; private set; }
         public string OpCode { get; private set; }
 
@@ -26,9 +26,7 @@ namespace DebugReloaded.Commands {
         public CommandTemplate(string name, string[] parTypes, string[] parSpecific, string opCode) {
             ParTypes = new DataType[parTypes.Length];
 
-            for (int i = 0; i < ParTypes.Length; i++) {
-                ParTypes[i] = DataTypeParse(parTypes[i]);
-            }
+            for (var i = 0; i < ParTypes.Length; i++) ParTypes[i] = DataTypeParse(parTypes[i]);
 
             Name = name;
             ParSpecific = parSpecific;
@@ -36,17 +34,16 @@ namespace DebugReloaded.Commands {
         }
 
         public static DataType GetDTFromArgument(string srg) {
-            
-            if(ctx.Registers.Find(r => r.Name == srg) != null)
+            if (ctx.Registers.Find(r => r.Name == srg) != null)
                 return DataType.Register16;
 
-            if(srg.IndexOf('[') < srg.IndexOf(']') && srg.IndexOf(']') != -1 && srg.IndexOf('[') != -1)
+            if (srg.IndexOf('[') < srg.IndexOf(']') && srg.IndexOf(']') != -1 && srg.IndexOf('[') != -1)
                 return DataType.Memory16;
 
-            if(int.TryParse(srg,NumberStyles.HexNumber,CultureInfo.InvariantCulture,out int res))
+            if (int.TryParse(srg, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out int res))
                 return DataType.Immediate16;
 
-            throw new Exception(); 
+            throw new Exception();
         }
 
 
@@ -95,17 +92,20 @@ namespace DebugReloaded.Commands {
                     throw new ArgumentException("type not found");
             }
         }
+
         public static List<CommandTemplate> GetCommandsFromXML(XDocument doc) {
-            List<CommandTemplate> commands = new List<CommandTemplate>();
+            var commands = new List<CommandTemplate>();
 
             Version DBVersion = Version.Parse(doc.Element("database").Element("apptarget").Value);
 
-            if(ApplicationContext.AppVersion < DBVersion)
-                ConsoleLogger.Write("La versione del database in uso è maggiore della versione dell'Applicazione, questo potrebbe portare al fatto che alcuni comandi potrebbero essere assemblabili ma non eseguibili.", "WARNING", ConsoleColor.DarkYellow);
+            if (ApplicationContext.AppVersion < DBVersion)
+                ConsoleLogger.Write(
+                    "La versione del database in uso è maggiore della versione dell'Applicazione, questo potrebbe portare al fatto che alcuni comandi potrebbero essere assemblabili ma non eseguibili.",
+                    "WARNING", ConsoleColor.DarkYellow);
 
-            var commandsNode = doc.Element("database").Element("Commands");
+            XElement commandsNode = doc.Element("database").Element("Commands");
 
-            foreach (var element in commandsNode.Elements("command"))
+            foreach (XElement element in commandsNode.Elements("command"))
                 commands.Add(new CommandTemplate(element.Attribute("name").Value,
                     new[] {element.Attribute("op1").Value, element.Attribute("op2").Value},
                     new[] {element.Attribute("op1spec").Value, element.Attribute("op2spec").Value},
@@ -115,11 +115,9 @@ namespace DebugReloaded.Commands {
         }
 
         public AssemblableCommand ToAssemblableCommand(string query) {
-
             string[] param = query.Split(' ')[1].Split(',');
 
             return new AssemblableCommand(this);
         }
-
     }
 }

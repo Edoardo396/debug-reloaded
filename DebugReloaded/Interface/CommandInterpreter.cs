@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DebugReloaded.Commands;
 using DebugReloaded.Containers;
 using DebugReloaded.Support;
 
 namespace DebugReloaded.Interface {
     public class CommandInterpreter {
-
         private readonly ApplicationContext context;
+
+        public CommandInterpreter(ApplicationContext context) {
+            this.context = context;
+        }
 
         public void WaitForCommands() {
             while (true) {
@@ -24,53 +24,67 @@ namespace DebugReloaded.Interface {
             switch (debugCommand.CommandString) {
                 case "r":
                     if (inputs.Length != 0)
-                        RCommand(debugCommand.Parameters, inputs[0], inputs[0]);
+                        this.RCommand(debugCommand.Parameters, inputs[0], inputs[0]);
                     else
-                        RCommand(debugCommand.Parameters);
+                        this.RCommand(debugCommand.Parameters);
                     break;
 
                 case "d":
                     if (inputs.Length != 0)
-                        DCommand(debugCommand.Parameters, inputs[0], inputs[0]);
+                        this.DCommand(debugCommand.Parameters, inputs[0], inputs[0]);
                     else
-                        DCommand(debugCommand.Parameters);
+                        this.DCommand(debugCommand.Parameters);
                     break;
                 case "e":
                     if (inputs.Length != 0)
-                        ECommand(debugCommand.Parameters, inputs[0], inputs[0]);
+                        this.ECommand(debugCommand.Parameters, inputs[0], inputs[0]);
                     else
-                        ECommand(debugCommand.Parameters);
+                        this.ECommand(debugCommand.Parameters);
                     break;
                 case "a":
                     if (inputs.Length != 0)
-                        ACommand(debugCommand.Parameters, inputs[0], inputs[0]);
+                        this.ACommand(debugCommand.Parameters, inputs[0], inputs[0]);
                     else
-                        ACommand(debugCommand.Parameters);
+                        this.ACommand(debugCommand.Parameters);
                     break;
                 case "g":
                     if (inputs.Length != 0)
-                        GCommand(debugCommand.Parameters, inputs[0], inputs[0]);
+                        this.GCommand(debugCommand.Parameters, inputs[0], inputs[0]);
                     else
-                        GCommand(debugCommand.Parameters);
+                        this.GCommand(debugCommand.Parameters);
                     break;
-
+                case "u":
+                    if (inputs.Length != 0)
+                        this.UCommand(debugCommand.Parameters, inputs[0], inputs[0]);
+                    else
+                        this.UCommand(debugCommand.Parameters);
+                    break;
             }
         }
-        
-        private void GCommand(List<string> debugCommandParameters, params string[] input) {
 
-      
+        private void GCommand(List<string> debugCommandParameters, params string[] input) {
+        }
+
+        private void UCommand(List<string> debugCommandParameters, params string[] input) {
+            if (debugCommandParameters.Count != 1)
+                return;
+
+            int index = int.Parse(debugCommandParameters[0]);
+
+            MemoryRangePointer pointer = context.MainMemory.ExtractMemoryPointer(index, 50);
+
+            List<AssemblableCommand> cmds = Disassembler.MultiCommandDisassembler(context, pointer);
+
+            foreach (AssemblableCommand cmd in cmds) Console.WriteLine(cmd.ToString());
         }
 
         private void ACommand(List<string> parameters, params string[] inputs) {
-
             if (parameters.Count != 1)
                 return;
 
             int index = int.Parse(parameters[0]);
 
             while (true) {
-
                 string buffer = MySupport.CWR($"{index} => ");
 
                 if (buffer == string.Empty)
@@ -85,10 +99,9 @@ namespace DebugReloaded.Interface {
                     Console.WriteLine("Errore: " + e.Message);
                     continue;
                 }
-                        
+
                 index += bytes.Length;
             }
-
         }
 
         private void ECommand(List<string> parameters, params string[] inputs) {
@@ -121,14 +134,14 @@ namespace DebugReloaded.Interface {
 
             int location = int.Parse(parameters[0]);
 
-            for (int i = 0; i < 16; ++i)
+            for (var i = 0; i < 16; ++i)
                 this.PrintLocationMemory(ref location);
         }
 
         private void PrintLocationMemory(ref int loc) {
             Console.Write($"{loc}h" + "   ");
 
-            for (int i = 0; i < 16; i++) {
+            for (var i = 0; i < 16; i++) {
                 Console.Write($"{context.MainMemory[loc]:X2}  ");
                 loc++;
             }
@@ -139,7 +152,7 @@ namespace DebugReloaded.Interface {
         private void RCommand(List<string> parameters, params string[] inputs) {
             if (parameters.Count == 0) {
                 foreach (Register register in context.Registers)
-                    Console.Write($"{register.Name.ToUpper()}={register.ToString()}   ");
+                    Console.Write($"{register.Name.ToUpper()}={register}   ");
                 Console.WriteLine();
                 return;
             }
@@ -152,17 +165,13 @@ namespace DebugReloaded.Interface {
                     return;
                 }
 
-                Console.WriteLine($"{reg.Name.ToUpper()} {reg.ToString()}");
+                Console.WriteLine($"{reg.Name.ToUpper()} {reg}");
                 try {
                     reg.SetValue(inputs.Length == 0 ? MySupport.CWR(":") : inputs[0]);
                 } catch (Exception e) {
                     Console.WriteLine("Unable to set register value, " + e.Message);
                 }
             }
-        }
-
-        public CommandInterpreter(ApplicationContext context) {
-            this.context = context;
         }
     }
 }

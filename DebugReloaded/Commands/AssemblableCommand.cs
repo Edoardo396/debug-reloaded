@@ -1,20 +1,16 @@
 ﻿using System;
-using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
-using System.Reflection.Emit;
-using System.Runtime.CompilerServices;
 using System.Text;
 using DebugReloaded.Support;
-using Microsoft.SqlServer.Server;
 
 namespace DebugReloaded.Commands {
     public class AssemblableCommand : Assemblable {
-        private CommandTemplate selectedCommand;
-
-        private ApplicationContext context;
-
-        private DataType[] parmsDt;
         private readonly string[] parms;
+
+        private readonly ApplicationContext context;
+
+        private readonly DataType[] parmsDt;
+        private readonly CommandTemplate selectedCommand;
 
         public AssemblableCommand(CommandTemplate cmd) {
             selectedCommand = cmd;
@@ -56,11 +52,7 @@ namespace DebugReloaded.Commands {
         }
 
         public AssemblableCommand()
-            : this(new CommandTemplate("", new[] {DataType.None, DataType.None}, new[] {"any", "any"}, String.Empty)) {
-        }
-
-        private bool CheckParSpecific(CommandTemplate c, string[] par) {
-            return !par.Where((t, i) => c.ParSpecific[i] != t && c.ParSpecific[i] != "any").Any();
+            : this(new CommandTemplate("", new[] {DataType.None, DataType.None}, new[] {"any", "any"}, string.Empty)) {
         }
 
         public byte[] Assemble() {
@@ -68,14 +60,14 @@ namespace DebugReloaded.Commands {
 
             string GetParameter(string content) {
                 if (content == "op1")
-                    return this.parms[0];
-                return content == "op2" ? this.parms[1] : "";
+                    return parms[0];
+                return content == "op2" ? parms[1] : "";
             }
 
             string parseStr = selectedCommand.OpCode;
 
             while (true) {
-                var limits = ReplaceLimits(parseStr);
+                Tuple<int, int> limits = this.ReplaceLimits(parseStr);
 
                 if (limits.Item1 == -1)
                     break;
@@ -86,9 +78,9 @@ namespace DebugReloaded.Commands {
 
                 string par;
 
-                if (dp == -1)
+                if (dp == -1) {
                     par = GetParameter(operand);
-                else {
+                } else {
                     par = GetParameter(operand.Substring(0, dp));
 
                     string val = par.Replace("[", "").Replace("]", "");
@@ -108,29 +100,31 @@ namespace DebugReloaded.Commands {
             return MySupport.GetBytesArrayFromString(parseStr);
         }
 
+        private bool CheckParSpecific(CommandTemplate c, string[] par) {
+            return !par.Where((t, i) => c.ParSpecific[i] != t && c.ParSpecific[i] != "any").Any();
+        }
+
         private Tuple<int, int> ReplaceLimits(string opCode) {
             int i1 = opCode.IndexOf("$");
             return new Tuple<int, int>(i1, opCode.IndexOf("$", i1 + 1));
         }
 
         public override string ToString() {
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
 
-            builder.Append(this.selectedCommand.Name + " ");
+            builder.Append(selectedCommand.Name + " ");
 
 
-            for (int i = 0; i < 2; i++) {
-                if (this.selectedCommand.ParTypes[i] == DataType.None)
+            for (var i = 0; i < 2; i++) {
+                if (selectedCommand.ParTypes[i] == DataType.None)
                     continue;
 
-                if (this.selectedCommand.ParTypes[i] == DataType.Memory16 ||
-                    this.selectedCommand.ParTypes[i] == DataType.Memory8)
+                if (selectedCommand.ParTypes[i] == DataType.Memory16 || selectedCommand.ParTypes[i] == DataType.Memory8)
                     builder.Append("[");
 
-                builder.Append(selectedCommand.ParSpecific[i] == "any" ? this.parms[i] : selectedCommand.ParSpecific[i]);
+                builder.Append(selectedCommand.ParSpecific[i] == "any" ? parms[i] : selectedCommand.ParSpecific[i]);
 
-                if (this.selectedCommand.ParTypes[i] == DataType.Memory16 ||
-                    this.selectedCommand.ParTypes[i] == DataType.Memory8)
+                if (selectedCommand.ParTypes[i] == DataType.Memory16 || selectedCommand.ParTypes[i] == DataType.Memory8)
                     builder.Append("]");
 
                 if (i != 1 && selectedCommand.ParTypes[i + 1] != DataType.None)
