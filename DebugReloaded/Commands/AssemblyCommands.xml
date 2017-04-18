@@ -1,10 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
+<!-- IMemorizable 8 is not supported yet. -->
+
 <database>
 
   
   <version>0.1</version>
-  <apptarget>3.1</apptarget>
+  <apptarget>0.1</apptarget>
 
   <mode>nle</mode>
 

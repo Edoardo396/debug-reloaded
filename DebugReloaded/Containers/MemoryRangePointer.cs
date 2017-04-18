@@ -10,11 +10,14 @@ namespace DebugReloaded.Containers {
         public int From { get; private set; }
         public int To { get; private set; }
 
-        public byte this[int index] {
+        
+        public new byte this[int index] {
             get { return this.GetValues(index, 1)[0]; }
             set { this.SetValues(index, new byte[] {value}); }
         }
-
+        
+          
+         
         public MemoryRangePointer(IMemorizable originalMemory, int from, int howmany) : base(howmany) {
             this.originalMemory = originalMemory;
             From = from;

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace DebugReloaded.Containers {
     public class Register : IMemorizable {
 
+
         private byte[] content = new byte[2] {0x00, 0x00};
 
         public string Name { get; set; } = null;
@@ -79,5 +80,7 @@ namespace DebugReloaded.Containers {
         public MemoryRangePointer ExtractMemoryPointer(int index, int howmany) {
             return new MemoryRangePointer(this, index,howmany);
         }
+
+        public int Length => 2;
     }
 }

@@ -55,6 +55,7 @@
     <Compile Include="DebugCommandsTests.cs" />
     <Compile Include="CommandsTests.cs" />
     <Compile Include="FlagTests.cs" />
+    <Compile Include="DissassemblerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
