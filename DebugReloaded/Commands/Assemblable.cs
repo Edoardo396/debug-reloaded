@@ -10,6 +10,6 @@ namespace DebugReloaded.Commands {
     }
 
     public interface Executable {
-        void Execute(IMemorizable[] par);
+        void Execute();
     }
 }

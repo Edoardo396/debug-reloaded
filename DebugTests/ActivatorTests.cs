@@ -12,7 +12,7 @@ namespace DebugTests {
 
         [TestMethod]
         public void MOVTest() {
-            var cmd = AssemblyExecutableCommand.GetCommandFromName("mov", context);
+            var cmd = AssemblyExecutableCommand.GetCommandFromName("mov ax,bx", context);
 
             Console.WriteLine(cmd.GetType().FullName);
         }

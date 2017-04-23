@@ -12,9 +12,6 @@ namespace DebugReloaded.Support {
         }
 
         public static void NormalizeValueString(ref string str) {
-            if (str.Length % 4 == 0)
-                return;
-
             while (str.Length % 4 != 0)
                 str = "0" + str;
         }
@@ -22,6 +19,14 @@ namespace DebugReloaded.Support {
         public static string ByteArrayToString(byte[] ba) {
             string hex = BitConverter.ToString(ba);
             return hex.Replace("-", "");
+        }
+
+        public static string ToHexString(this byte[] arr) {
+            return ByteArrayToString(arr);
+        }
+
+        public static byte[] ToByteArray(this string sbytes) {
+            return GetBytesArrayFromString(sbytes);
         }
 
         public static byte[] GetBytesArrayFromString(string sbytes) {
@@ -33,7 +38,6 @@ namespace DebugReloaded.Support {
         }
 
         public static string BetweenSubstring(this string s, string del1, string del2) {
-
             int ind1 = s.IndexOf(del1) + 1, ind2 = s.IndexOf(del2) - 1;
 
             if (ind1 == -1 || ind2 == -1)
@@ -45,6 +49,5 @@ namespace DebugReloaded.Support {
         public static int ToInt(this string s) {
             return int.Parse(s);
         }
-
     }
 }

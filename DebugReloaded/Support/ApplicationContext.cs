@@ -39,7 +39,8 @@ namespace DebugReloaded.Support {
             new Register("si"),
             new Register("di"),
             new Register("cs"),
-            new Register("ds")
+            new Register("ds"),
+            new Register("ip")
         };
 
         public ApplicationContext() {

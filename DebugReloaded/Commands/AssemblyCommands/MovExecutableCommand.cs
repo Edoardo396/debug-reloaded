@@ -4,14 +4,14 @@ using DebugReloaded.Interface;
 using DebugReloaded.Support;
 
 namespace DebugReloaded.Commands.AssemblyCommands {
-    public class MovExecutableCommand : AssemblyExecutableCommand {
-        public MovExecutableCommand(ApplicationContext ctx) : base(ctx) {
+    public class MOVExecutableCommand : AssemblyExecutableCommand {
+        public MOVExecutableCommand(ApplicationContext ctx, string instruct) : base(ctx, instruct) {
         }
+        public override void Execute() {
 
-        public override string Name => "mov";
-        public override void Execute(IMemorizable[] par) { 
-            
-            par[0].SetValues(0, par[1].GetValues(0, par[0].Length));
+            var parameters = base.GetParamsMemorizables();
+
+            parameters[0].SetValues(0, parameters[1].GetValues(0, parameters[0].Length));
         }
 
     }

@@ -6,28 +6,31 @@ using DebugReloaded.Support;
 using Microsoft.SqlServer.Server;
 
 namespace DebugReloaded.Commands.AssemblyCommands {
+
     public abstract class AssemblyExecutableCommand : AssemblableCommand, Executable {
 
-        protected ApplicationContext ctx;
+        public string AssemblyCommand { get; protected set; }
 
-        public abstract string Name { get; }
-
-        protected AssemblyExecutableCommand(ApplicationContext ctx) {
-            this.ctx = ctx;
+        protected AssemblyExecutableCommand(ApplicationContext ctx, string instruct) : base(ctx, instruct) {
+            AssemblyCommand = instruct;
         }
 
-        public abstract void Execute(IMemorizable[] par);
+        public abstract void Execute();
 
-        public static AssemblyExecutableCommand GetCommandFromName(string cmdName, ApplicationContext myctx) {
+        public static AssemblyExecutableCommand GetCommandFromName(string instruct, ApplicationContext myctx) {
             
 
-            var type = Type.GetType($"DebugReloaded.Commands.AssemblyCommands.{cmdName.ToUpper()}Command");
-            return (AssemblyExecutableCommand)Activator.CreateInstance(type, myctx);
+
+            var type = Type.GetType($"DebugReloaded.Commands.AssemblyCommands.{GetCommandNameFromString(instruct).ToUpper()}ExecutableCommand");
+            return (AssemblyExecutableCommand)Activator.CreateInstance(type, myctx, instruct);
         }
 
 
+        protected IMemorizable[] GetParamsMemorizables() {
+            return GetIMemorizablesFromCommand(AssemblyCommand, base.context);
+        }
 
-        public static IMemorizable[] GetIMemorizablesFromCommand(string cmd, ApplicationContext context) {
+        private static IMemorizable[] GetIMemorizablesFromCommand(string cmd, ApplicationContext context) {
 
             IMemorizable GetMemorizableFromAssembly(string ass) {
 
@@ -58,7 +61,7 @@ namespace DebugReloaded.Commands.AssemblyCommands {
             var splits = cmd.Split(',');
 
             for (int i = 0; i < 2; i++) {
-                splits[i] = splits[i].TrimStart().TrimEnd();
+                splits[i] = splits[i].Substring(splits[i].IndexOf(' ') != -1 ? splits[i].IndexOf(' ') : 0).TrimStart().TrimEnd();
                 memorizables[i] = GetMemorizableFromAssembly(splits[i]);
             }
 
@@ -66,7 +69,7 @@ namespace DebugReloaded.Commands.AssemblyCommands {
         }
 
         public static string GetCommandNameFromString(string cmd) {
-            return cmd.Substring(0, (cmd.IndexOf((char) 32) - 1));
+            return cmd.Substring(0, (cmd.IndexOf((char) 32))).TrimEnd();
         }
 
 

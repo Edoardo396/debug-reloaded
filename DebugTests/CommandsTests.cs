@@ -57,6 +57,8 @@ namespace DebugTests {
             Assert.IsTrue(context.MainMemory.Dump(300, 3) == "A1-00-01");
         }
 
+
+        /* MemorizableTests 
         [TestMethod]
         public void GetMemorizableTest() {
             string[] memz = {"ax,[100]", "ax,ff", "[100],ax"};
@@ -65,5 +67,6 @@ namespace DebugTests {
                 foreach (var cmd in AssemblyExecutableCommand.GetIMemorizablesFromCommand(s, context))
                     Console.WriteLine(cmd);
         }
+        */
     }
 }

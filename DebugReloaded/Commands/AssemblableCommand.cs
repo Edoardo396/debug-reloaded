@@ -5,6 +5,7 @@ using DebugReloaded.Support;
 
 namespace DebugReloaded.Commands {
     public class AssemblableCommand : Assemblable {
+
         private readonly string[] parms;
 
         protected readonly ApplicationContext context;

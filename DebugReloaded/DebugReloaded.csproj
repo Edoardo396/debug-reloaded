@@ -73,7 +73,7 @@
     <Compile Include="Commands\AssemblableCommand.cs" />
     <Compile Include="Commands\Assembler.cs" />
     <Compile Include="Commands\AssemblyCommands\AssemblyExecutableCommand.cs" />
-    <Compile Include="Commands\AssemblyCommands\MovExecutableCommand.cs" />
+    <Compile Include="Commands\AssemblyCommands\MOVExecutableCommand.cs" />
     <Compile Include="Commands\CommandEnums.cs" />
     <Compile Include="Commands\CommandTemplate.cs" />
     <Compile Include="Commands\Disassembler.cs" />
