@@ -72,9 +72,12 @@
     <Compile Include="Commands\Assemblable.cs" />
     <Compile Include="Commands\AssemblableCommand.cs" />
     <Compile Include="Commands\Assembler.cs" />
+    <Compile Include="Commands\AssemblyCommands\AssemblyExecutableCommand.cs" />
+    <Compile Include="Commands\AssemblyCommands\MovExecutableCommand.cs" />
     <Compile Include="Commands\CommandEnums.cs" />
     <Compile Include="Commands\CommandTemplate.cs" />
     <Compile Include="Commands\Disassembler.cs" />
+    <Compile Include="Commands\Executer.cs" />
     <Compile Include="Containers\Flag.cs" />
     <Compile Include="Containers\IMemorizable.cs" />
     <Compile Include="Containers\ImmediateNumber.cs" />

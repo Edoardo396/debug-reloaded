@@ -31,5 +31,20 @@ namespace DebugReloaded.Support {
                     .Select(x => Convert.ToByte(sbytes.Substring(x, 2), 16))
                     .ToArray();
         }
+
+        public static string BetweenSubstring(this string s, string del1, string del2) {
+
+            int ind1 = s.IndexOf(del1) + 1, ind2 = s.IndexOf(del2) - 1;
+
+            if (ind1 == -1 || ind2 == -1)
+                return string.Empty;
+
+            return s.Substring(ind1, ind2 - ind1);
+        }
+
+        public static int ToInt(this string s) {
+            return int.Parse(s);
+        }
+
     }
 }

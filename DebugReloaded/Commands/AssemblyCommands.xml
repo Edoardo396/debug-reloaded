@@ -12,7 +12,7 @@
 
   <Commands>
 
-    <!-- Move Commands REG / REG-->
+    <!-- Move Commands REG / REG -->
     <command name="mov" op1="r16" op1spec="ax" op2="r16" op2spec="bx" opcode="89D8" />
     <command name="mov" op1="r16" op1spec="bx" op2="r16" op2spec="ax" opcode="89C3" />
     <command name="mov" op1="r16" op1spec="ax" op2="r16" op2spec="cx" opcode="89C8" />

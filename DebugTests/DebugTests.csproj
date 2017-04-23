@@ -48,6 +48,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyCommands\MOV.cs" />
     <Compile Include="MemoryRangePointerTests.cs" />
     <Compile Include="MemoryTests.cs" />
     <Compile Include="RegisterTests.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="CommandsTests.cs" />
     <Compile Include="FlagTests.cs" />
     <Compile Include="DissassemblerTests.cs" />
+    <Compile Include="ActivatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

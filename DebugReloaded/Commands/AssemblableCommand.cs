@@ -7,13 +7,15 @@ namespace DebugReloaded.Commands {
     public class AssemblableCommand : Assemblable {
         private readonly string[] parms;
 
-        private readonly ApplicationContext context;
+        protected readonly ApplicationContext context;
 
         private readonly DataType[] parmsDt;
-        private readonly CommandTemplate selectedCommand;
+        protected readonly CommandTemplate selectedCommand;
 
-        public AssemblableCommand(CommandTemplate cmd) {
+        // TODO CHECK
+        public AssemblableCommand(CommandTemplate cmd, ApplicationContext ctx = null) {
             selectedCommand = cmd;
+            context = ctx;
         }
 
         public AssemblableCommand(CommandTemplate selectedCommand, ApplicationContext context, DataType[] parmsDt,
