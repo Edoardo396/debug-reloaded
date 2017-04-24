@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
-using DebugReloadedCore.Containers;
-using DebugReloadedCore.Support;
+using DebugReloaded.Containers;
+using DebugReloaded.Support;
 using Microsoft.SqlServer.Server;
 
 namespace DebugReloaded.Commands.AssemblyCommands {

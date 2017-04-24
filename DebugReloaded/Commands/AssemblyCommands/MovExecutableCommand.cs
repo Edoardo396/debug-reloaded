@@ -1,6 +1,7 @@
 ﻿using System;
+using DebugReloaded.Containers;
 using DebugReloaded.Interface;
-using DebugReloadedCore.Support;
+using DebugReloaded.Support;
 
 namespace DebugReloaded.Commands.AssemblyCommands {
     public class MOVExecutableCommand : AssemblyExecutableCommand {

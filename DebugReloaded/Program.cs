@@ -1,6 +1,6 @@
 ﻿using System;
 using DebugReloaded.Interface;
-using DebugReloadedCore.Support;
+using DebugReloaded.Support;
 
 namespace DebugReloaded {
     internal class Program {

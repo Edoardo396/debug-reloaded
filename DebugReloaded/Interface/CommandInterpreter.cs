@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using DebugReloaded.Commands;
-using DebugReloadedCore.Containers;
-using DebugReloadedCore.Support;
+using DebugReloaded.Containers;
+using DebugReloaded.Support;
 
 namespace DebugReloaded.Interface {
     public class CommandInterpreter {

@@ -63,9 +63,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DebugReloaded\DebugReloadedApplication.csproj">
+    <ProjectReference Include="..\DebugReloaded\DebugReloaded.csproj">
       <Project>{aa94bf1f-9c30-4436-b2d5-1ea57263b8d2}</Project>
-      <Name>DebugReloadedApplication</Name>
+      <Name>DebugReloaded</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

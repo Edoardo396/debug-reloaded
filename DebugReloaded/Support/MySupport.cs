@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace DebugReloadedCore.Support {
+namespace DebugReloaded.Support {
     public static class MySupport {
         public static string CWR(object write, bool line = false) {
             if (line)

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
-using DebugReloadedCore.Support;
+using DebugReloaded.Support;
 
 namespace DebugReloaded.Commands {
     public class AssemblableCommand : Assemblable {

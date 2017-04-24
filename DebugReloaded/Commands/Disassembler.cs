@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DebugReloadedCore.Containers;
-using DebugReloadedCore.Support;
+using DebugReloaded.Containers;
+using DebugReloaded.Support;
 
 namespace DebugReloaded.Commands {
     public class Disassembler {

@@ -1,6 +1,7 @@
 ﻿using System;
+using DebugReloaded.Interface;
 
-namespace DebugReloadedCore.Containers {
+namespace DebugReloaded.Containers {
     public class ImmediateNumber : IMemorizable {
         private readonly byte[] content;
 
@@ -14,7 +15,7 @@ namespace DebugReloadedCore.Containers {
         }
 
         public virtual void SetValues(int index, byte[] bytes) {
-            // ConsoleLogger.Write("Assigning a value to a number. Be Careful", "WARNING", ConsoleColor.Yellow);
+            ConsoleLogger.Write("Assigning a value to a number. Be Careful", "WARNING", ConsoleColor.Yellow);
             for (var i = 0; i < bytes.Length; i++)
                 content[i + index] = bytes[i];
         }

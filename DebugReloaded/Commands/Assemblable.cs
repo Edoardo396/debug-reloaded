@@ -1,4 +1,6 @@
-﻿namespace DebugReloaded.Commands {
+﻿using DebugReloaded.Containers;
+
+namespace DebugReloaded.Commands {
     public interface Assemblable {
         byte[] Assemble();
     }

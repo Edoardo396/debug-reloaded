@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DebugReloaded.Commands.AssemblyCommands;
-using DebugReloadedCore.Support;
+using DebugReloaded.Support;
 using static DebugReloaded.Commands.AssemblyCommands.AssemblyExecutableCommand;
 
 namespace DebugReloaded.Commands {

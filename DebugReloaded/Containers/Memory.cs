@@ -1,6 +1,4 @@
-﻿using DebugReloadedCore.Support;
-
-namespace DebugReloadedCore.Containers {
+﻿namespace DebugReloaded.Containers {
     public class Memory : IMemorizable {
         protected byte[] content;
 

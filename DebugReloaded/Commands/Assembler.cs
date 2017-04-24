@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DebugReloadedCore.Support;
+using DebugReloaded.Support;
 
 namespace DebugReloaded.Commands {
     public class Assembler {

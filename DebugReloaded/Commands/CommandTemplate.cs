@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Xml.Linq;
 using DebugReloaded.Interface;
-using DebugReloadedCore.Support;
+using DebugReloaded.Support;
 
 namespace DebugReloaded.Commands {
     public class CommandTemplate {

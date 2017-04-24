@@ -1,4 +1,4 @@
-﻿namespace DebugReloadedCore.Containers {
+﻿namespace DebugReloaded.Containers {
     public interface IMemorizable {
         int Length { get; }
         void SetValues(int index, byte[] value);
