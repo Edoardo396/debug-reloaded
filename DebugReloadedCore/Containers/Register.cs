@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Linq;
+using DebugReloadedCore.Support;
 
-namespace DebugReloaded.Containers {
+namespace DebugReloadedCore.Containers {
     public class Register : IMemorizable {
         public string Name { get; set; }
 

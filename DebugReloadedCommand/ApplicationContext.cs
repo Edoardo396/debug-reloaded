@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Xml.Linq;
 using DebugReloaded.Commands;
-using DebugReloaded.Containers;
 using DebugReloaded.Interface;
+using DebugReloadedCore.Containers;
 
-namespace DebugReloaded.Support {
+namespace DebugReloadedCore.Support {
     public class ApplicationContext {
         //  => Version.Parse(FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).FileVersion);
 

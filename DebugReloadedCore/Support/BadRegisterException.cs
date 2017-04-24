@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using DebugReloadedCore.Containers;
 
-namespace DebugReloaded.Containers {
+namespace DebugReloadedCore.Support {
     [Serializable]
     internal class BadRegisterException : Exception {
         private byte[] bytes;

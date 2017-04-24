@@ -1,4 +1,4 @@
-﻿namespace DebugReloaded.Containers {
+﻿namespace DebugReloadedCore.Containers {
     public class MemoryRangePointer : Memory {
         private readonly IMemorizable originalMemory;
 

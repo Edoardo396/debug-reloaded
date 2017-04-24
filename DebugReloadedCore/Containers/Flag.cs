@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DebugReloaded.Containers {
+namespace DebugReloadedCore.Containers {
     public class Flag : IMemorizable {
         public string Name { get; }
 
