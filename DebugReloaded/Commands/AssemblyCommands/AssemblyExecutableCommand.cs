@@ -6,9 +6,7 @@ using DebugReloaded.Support;
 using Microsoft.SqlServer.Server;
 
 namespace DebugReloaded.Commands.AssemblyCommands {
-
     public abstract class AssemblyExecutableCommand : AssemblableCommand, Executable {
-
         public string AssemblyCommand { get; protected set; }
 
         protected AssemblyExecutableCommand(ApplicationContext ctx, string instruct) : base(ctx, instruct) {
@@ -18,11 +16,10 @@ namespace DebugReloaded.Commands.AssemblyCommands {
         public abstract void Execute();
 
         public static AssemblyExecutableCommand GetCommandFromName(string instruct, ApplicationContext myctx) {
-            
-
-
-            var type = Type.GetType($"DebugReloaded.Commands.AssemblyCommands.{GetCommandNameFromString(instruct).ToUpper()}ExecutableCommand");
-            return (AssemblyExecutableCommand)Activator.CreateInstance(type, myctx, instruct);
+            var type =
+                Type.GetType(
+                    $"DebugReloaded.Commands.AssemblyCommands.{GetCommandNameFromString(instruct).ToUpper()}ExecutableCommand");
+            return (AssemblyExecutableCommand) Activator.CreateInstance(type, myctx, instruct);
         }
 
 
@@ -33,19 +30,19 @@ namespace DebugReloaded.Commands.AssemblyCommands {
         private static IMemorizable[] GetIMemorizablesFromCommand(string cmd, ApplicationContext context) {
 
             IMemorizable GetMemorizableFromAssembly(string ass) {
-
                 Register reg;
 
                 if ((reg = context.Registers.Find(r => r.Name == ass)) != null)
                     return reg;
 
-                MemoryRangePointer mem;
-
                 if (ass.IndexOf('[') < ass.IndexOf(']') && ass.IndexOf('[') != -1) {
-
-
                     // TODO Byte / Word
-                    // TODO Indirect Ref
+
+                    IMemorizable indirect = CheckForIndirectReference(ass.BetweenSubstring("[", "]"), context);
+
+                    if (indirect != null)
+                        return indirect;
+
                     MemoryRangePointer pointer =
                         context.MainMemory.ExtractMemoryPointer(ass.BetweenSubstring("[", "]").ToInt(), 2);
 
@@ -61,17 +58,23 @@ namespace DebugReloaded.Commands.AssemblyCommands {
             var splits = cmd.Split(',');
 
             for (int i = 0; i < 2; i++) {
-                splits[i] = splits[i].Substring(splits[i].IndexOf(' ') != -1 ? splits[i].IndexOf(' ') : 0).TrimStart().TrimEnd();
+                splits[i] =
+                    splits[i].Substring(splits[i].IndexOf(' ') != -1 ? splits[i].IndexOf(' ') : 0).TrimStart().TrimEnd();
                 memorizables[i] = GetMemorizableFromAssembly(splits[i]);
             }
 
-            return memorizables;           
+            return memorizables;
+        }
+
+        private static IMemorizable CheckForIndirectReference(string s, ApplicationContext context) {
+            if (context.Registers.Find(r => r.Name == s) == null)
+                return null;
+
+            return context.Registers.Find(r => r.Name == s).ExtractMemoryPointer(0, 2);
         }
 
         public static string GetCommandNameFromString(string cmd) {
             return cmd.Substring(0, (cmd.IndexOf((char) 32))).TrimEnd();
         }
-
-
     }
 }

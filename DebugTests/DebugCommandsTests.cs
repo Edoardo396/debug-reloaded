@@ -12,7 +12,7 @@ namespace DebugTests {
 
 
         [AssemblyInitialize]
-        public static void Initilize(TestContext _context) {
+        public static void Initilize(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext _context) {
             context = new ApplicationContext();
         }
 

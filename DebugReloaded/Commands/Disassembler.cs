@@ -14,7 +14,7 @@ namespace DebugReloaded.Commands {
 
                 try {
                     length = GetCommandLength(ctx, pointer.ExtractMemoryPointer(index, pointer.Length - index));
-                } catch (Exception e) {
+                } catch {
                     // ConsoleLogger.Write("Cannot find a command with OpCode " + (pointer.ExtractMemoryPointer(index, pointer.Length - index)).ToString(), "ERROR", ConsoleColor.Red);
                     index += 1;
                     cmds.Add(new AssemblableCommand(CommandTemplate.UNKNOWN));
@@ -37,9 +37,11 @@ namespace DebugReloaded.Commands {
                 if (lenTemplate.OpCode.Count(c => c == '$') / 2 == 2) {
                     return
                         int.Parse(
-                            lenTemplate.ParTypes[0].ToString().Substring(lenTemplate.ParTypes[0].ToString().Length - 2, 2)) / 8 +
+                            lenTemplate.ParTypes[0].ToString()
+                                .Substring(lenTemplate.ParTypes[0].ToString().Length - 2, 2)) / 8 +
                         int.Parse(
-                            lenTemplate.ParTypes[1].ToString().Substring(lenTemplate.ParTypes[1].ToString().Length - 2, 2)) / 8;
+                            lenTemplate.ParTypes[1].ToString()
+                                .Substring(lenTemplate.ParTypes[1].ToString().Length - 2, 2)) / 8;
                 }
 
                 if (lenTemplate.OpCode.Count(c => c == '$') / 2 == 0)
@@ -47,8 +49,9 @@ namespace DebugReloaded.Commands {
 
                 int np = sbyte.Parse(lenTemplate.OpCode[lenTemplate.OpCode.IndexOf("$") + 3].ToString()) - 1;
                 return
-                    int.Parse(lenTemplate.ParTypes[np].ToString()
-                        .Substring(lenTemplate.ParTypes[np].ToString().Length - 2, 2)) / 8;
+                    int.Parse(
+                        lenTemplate.ParTypes[np].ToString().Substring(lenTemplate.ParTypes[np].ToString().Length - 2, 2)) /
+                    8;
             }
 
             CommandTemplate template =
