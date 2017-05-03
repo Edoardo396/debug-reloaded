@@ -3,7 +3,7 @@ using DebugReloaded.Commands;
 using DebugReloaded.Containers;
 using DebugReloaded.Support;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.Win32;
+
 
 namespace DebugTests {
     [TestClass]

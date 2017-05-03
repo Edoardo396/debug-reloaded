@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0426A854-C38E-4BD0-B84F-5AB89671F8B7}</ProjectGuid>
+    <ProjectGuid>{07FC0908-20D9-42DA-95A7-27F3F7F695F2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DebugTests</RootNamespace>
@@ -48,16 +48,18 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivatorTests.cs" />
+    <Compile Include="AssemblyCommandsTests.cs" />
+    <Compile Include="CommandsDebug\ArithmeticCommandsTests.cs" />
+    <Compile Include="CommandsTests.cs" />
+    <Compile Include="DebugCommandsTests.cs" />
+    <Compile Include="DissassemblerTests.cs" />
+    <Compile Include="FlagTests.cs" />
     <Compile Include="MemoryRangePointerTests.cs" />
     <Compile Include="MemoryTests.cs" />
     <Compile Include="RegisterTests.cs" />
+    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DebugCommandsTests.cs" />
-    <Compile Include="CommandsTests.cs" />
-    <Compile Include="FlagTests.cs" />
-    <Compile Include="DissassemblerTests.cs" />
-    <Compile Include="ActivatorTests.cs" />
-    <Compile Include="AssemblyCommandsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -68,7 +70,6 @@
       <Name>DebugReloaded</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

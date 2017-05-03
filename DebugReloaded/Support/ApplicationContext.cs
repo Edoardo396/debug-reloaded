@@ -5,6 +5,7 @@ using System.Xml.Linq;
 using DebugReloaded.Commands;
 using DebugReloaded.Containers;
 using DebugReloaded.Interface;
+using System.IO;
 
 namespace DebugReloaded.Support {
     public class ApplicationContext {
@@ -14,7 +15,7 @@ namespace DebugReloaded.Support {
 
         public static readonly XDocument doc =
             XDocument.Load(
-                @"C:\Users\edoardo.fullin\OneDrive\Programmazione\C#\DebugReloaded\DebugReloaded\Commands\AssemblyCommands.xml");
+                @"C:\Users\edoardo.fullin\Desktop\debug-reloaded\DebugReloaded\Commands\AssemblyCommands.xml");
 
         public static readonly int memSize = 65535;
 

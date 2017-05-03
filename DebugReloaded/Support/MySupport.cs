@@ -43,11 +43,25 @@ namespace DebugReloaded.Support {
             if (ind1 == -1 || ind2 == -1)
                 return string.Empty;
 
-            return s.Substring(ind1, ind2 - ind1);
+            return s.Substring(ind1, ind2 - ind1 + 1);
         }
 
         public static int ToInt(this string s) {
             return int.Parse(s);
         }
+
+        public static byte[] Normalize(byte[] bytes) {
+
+            int firstNot0Pos = -1;
+
+            for (int i = 0; i < bytes.Length; i++) {
+                if (bytes[i] == 0) continue;
+                firstNot0Pos = i;
+                break;
+            }
+
+            return bytes.Skip(firstNot0Pos-1).ToArray();
+        }
+
     }
 }

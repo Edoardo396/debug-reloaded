@@ -70,7 +70,9 @@ namespace DebugReloaded.Commands.AssemblyCommands {
             if (context.Registers.Find(r => r.Name == s) == null)
                 return null;
 
-            return context.Registers.Find(r => r.Name == s).ExtractMemoryPointer(0, 2);
+            int registerValue = context.Registers.Find(r => r.Name == s).Value.ToHexString().ToInt();
+
+            return context.MainMemory.ExtractMemoryPointer(registerValue, 2);
         }
 
         public static string GetCommandNameFromString(string cmd) {

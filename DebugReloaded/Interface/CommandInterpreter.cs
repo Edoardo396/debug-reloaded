@@ -6,6 +6,7 @@ using DebugReloaded.Support;
 
 namespace DebugReloaded.Interface {
     public class CommandInterpreter {
+
         private readonly ApplicationContext context;
 
         public CommandInterpreter(ApplicationContext context) {

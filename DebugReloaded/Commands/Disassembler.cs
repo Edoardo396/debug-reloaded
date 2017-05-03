@@ -93,7 +93,7 @@ namespace DebugReloaded.Commands {
             if (!template.OpCode.Contains("$"))
                 return new AssemblableCommand(template);
 
-            inizioPar = template.OpCode.IndexOf("$", inizioPar);
+            inizioPar = template.OpCode.IndexOf("$"/*, inizioPar*/); // TOLTO A CASO PERCHE NON ANDAVA
 
             int spar = -1;
 

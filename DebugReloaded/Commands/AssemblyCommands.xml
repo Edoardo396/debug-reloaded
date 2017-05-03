@@ -43,6 +43,10 @@
     <command name="inc" op1="r16" op1spec="cx" op2="none" op2spec="any" opcode="41" />
     <command name="inc" op1="r16" op1spec="si" op2="none" op2spec="any" opcode="46" />
 
+    <!-- Plus Command ADD -->
+    <command name="add" op1="r16" op1spec="ax" op2="i16" op2spec="any" opcode="05$op2:le$" />
+    <command name="add" op1="r16" op1spec="bx" op2="r16" op2spec="ax" opcode="01C3" />
+    <command name="add" op1="m16" op1spec="any" op2="r16" op2spec="bx" opcode="011E$op1:le$" />
 
   </Commands>
 

@@ -35,7 +35,7 @@ namespace DebugTests {
             var cmd = new AssemblableCommand(context, "mov si,B7");
 
             context.MainMemory.SetValues(300, cmd.Assemble());
-
+           
             Assert.IsTrue(context.MainMemory.Dump(300, 3) == "BE-B7-00");
         }
 
