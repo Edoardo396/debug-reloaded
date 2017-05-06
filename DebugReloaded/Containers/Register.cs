@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using DebugReloaded.Support;
 
 namespace DebugReloaded.Containers {
     public class Register : IMemorizable {
@@ -27,6 +28,8 @@ namespace DebugReloaded.Containers {
 
         public void SetValues(int index, byte[] value) {
             var bytes = new byte[2];
+
+            value = MySupport.Normalize(value);
 
             bytes = value.Length == 1 ? new byte[] {0, value[0]} : value;
 

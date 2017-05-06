@@ -20,8 +20,6 @@ namespace DebugTests.CommandsDebug {
 
                 Console.WriteLine($"AX: {context.GetRegisterByName("ax").Value.ToHexString()} BX: {context.GetRegisterByName("bx").Value.ToHexString()} [200]: {context.MainMemory.Dump(200,2)}");          
             }
-
-
         }
     }
 }
