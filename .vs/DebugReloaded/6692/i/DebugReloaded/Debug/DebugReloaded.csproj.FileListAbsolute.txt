@@ -1,0 +1,5 @@
+C:\Users\edoardo.fullin\Desktop\debug-reloaded\.vs\DebugReloaded\6692\b\DebugReloaded\bin\Debug\DebugReloaded.exe.config
+C:\Users\edoardo.fullin\Desktop\debug-reloaded\.vs\DebugReloaded\6692\b\DebugReloaded\bin\Debug\DebugReloaded.exe
+C:\Users\edoardo.fullin\Desktop\debug-reloaded\.vs\DebugReloaded\6692\b\DebugReloaded\bin\Debug\DebugReloaded.pdb
+C:\Users\edoardo.fullin\Desktop\debug-reloaded\.vs\DebugReloaded\6692\i\DebugReloaded\Debug\DebugReloaded.exe
+C:\Users\edoardo.fullin\Desktop\debug-reloaded\.vs\DebugReloaded\6692\i\DebugReloaded\Debug\DebugReloaded.pdb

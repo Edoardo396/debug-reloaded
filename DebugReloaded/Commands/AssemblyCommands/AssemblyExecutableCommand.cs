@@ -49,6 +49,8 @@ namespace DebugReloaded.Commands.AssemblyCommands {
                     return pointer;
                 }
 
+                MySupport.NormalizeValueString(ref ass);
+
                 return new ImmediateNumber(MySupport.GetBytesArrayFromString(ass), true);
             }
 
@@ -57,7 +59,7 @@ namespace DebugReloaded.Commands.AssemblyCommands {
 
             var splits = cmd.Split(',');
 
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < splits.Length; i++) {
                 splits[i] =
                     splits[i].Substring(splits[i].IndexOf(' ') != -1 ? splits[i].IndexOf(' ') : 0).TrimStart().TrimEnd();
                 memorizables[i] = GetMemorizableFromAssembly(splits[i]);

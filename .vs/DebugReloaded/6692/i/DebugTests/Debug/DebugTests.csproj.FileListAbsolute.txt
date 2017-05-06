@@ -1,0 +1,8 @@
+C:\Users\edoardo.fullin\Desktop\debug-reloaded\.vs\DebugReloaded\6692\b\DebugTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\edoardo.fullin\Desktop\debug-reloaded\.vs\DebugReloaded\6692\b\DebugTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\edoardo.fullin\Desktop\debug-reloaded\.vs\DebugReloaded\6692\b\DebugTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\edoardo.fullin\Desktop\debug-reloaded\.vs\DebugReloaded\6692\b\DebugTests\bin\Debug\DebugTests.dll
+C:\Users\edoardo.fullin\Desktop\debug-reloaded\.vs\DebugReloaded\6692\b\DebugTests\bin\Debug\DebugTests.pdb
+C:\Users\edoardo.fullin\Desktop\debug-reloaded\.vs\DebugReloaded\6692\i\DebugTests\Debug\DebugTests.csprojResolveAssemblyReference.cache
+C:\Users\edoardo.fullin\Desktop\debug-reloaded\.vs\DebugReloaded\6692\i\DebugTests\Debug\DebugTests.dll
+C:\Users\edoardo.fullin\Desktop\debug-reloaded\.vs\DebugReloaded\6692\i\DebugTests\Debug\DebugTests.pdb

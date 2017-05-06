@@ -51,6 +51,7 @@
     <Compile Include="ActivatorTests.cs" />
     <Compile Include="AssemblyCommandsTests.cs" />
     <Compile Include="CommandsDebug\ArithmeticCommandsTests.cs" />
+    <Compile Include="CommandsDebug\JumpCommandsTests.cs" />
     <Compile Include="CommandsTests.cs" />
     <Compile Include="DebugCommandsTests.cs" />
     <Compile Include="DissassemblerTests.cs" />
