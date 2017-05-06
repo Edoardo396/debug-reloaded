@@ -2,6 +2,10 @@
 using System.Linq;
 
 namespace DebugReloaded.Interface {
+
+    /// <summary>
+    /// Definisce un comando di ^debug
+    /// </summary>
     public class DebugCommand {
         public string CommandString { get; set; }
 

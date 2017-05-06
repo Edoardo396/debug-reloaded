@@ -5,7 +5,12 @@ using DebugReloaded.Containers;
 using DebugReloaded.Support;
 
 namespace DebugReloaded.Interface {
+
+    /// <summary>
+    /// Interprete di comandi di ^debug
+    /// </summary>
     public class CommandInterpreter {
+
 
         private readonly ApplicationContext context;
 
@@ -13,6 +18,9 @@ namespace DebugReloaded.Interface {
             this.context = context;
         }
 
+        /// <summary>
+        /// Continua a chiedere ed eseguire comandi
+        /// </summary>
         public void WaitForCommands() {
             while (true) {
                 Console.Write("-");
@@ -21,6 +29,11 @@ namespace DebugReloaded.Interface {
             }
         }
 
+        /// <summary>
+        /// Esegue il comando specificato
+        /// </summary>
+        /// <param name="debugCommand">Comando da eseguire</param>
+        /// <param name="inputs">Eventuali parametri (input per debug e tests)</param>
         public void ExecuteCommand(DebugCommand debugCommand, params string[] inputs) {
             switch (debugCommand.CommandString) {
                 case "r":
@@ -62,6 +75,7 @@ namespace DebugReloaded.Interface {
                     break;
             }
         }
+
 
         private void GCommand(List<string> debugCommandParameters, params string[] input) {
         }
@@ -139,17 +153,6 @@ namespace DebugReloaded.Interface {
                 this.PrintLocationMemory(ref location);
         }
 
-        private void PrintLocationMemory(ref int loc) {
-            Console.Write($"{loc}h" + "   ");
-
-            for (var i = 0; i < 16; i++) {
-                Console.Write($"{context.MainMemory[loc]:X2}  ");
-                loc++;
-            }
-
-            Console.WriteLine();
-        }
-
         private void RCommand(List<string> parameters, params string[] inputs) {
             if (parameters.Count == 0) {
                 foreach (Register register in context.Registers)
@@ -173,6 +176,22 @@ namespace DebugReloaded.Interface {
                     Console.WriteLine("Unable to set register value, " + e.Message);
                 }
             }
+        }
+
+
+        /// <summary>
+        /// Scrive 16 bytes di memoria
+        /// </summary>
+        /// <param name="loc">Byte inizuiale</param>
+        private void PrintLocationMemory(ref int loc) {
+            Console.Write($"{loc}h" + "   ");
+
+            for (var i = 0; i < 16; i++) {
+                Console.Write($"{context.MainMemory[loc]:X2}  ");
+                loc++;
+            }
+
+            Console.WriteLine();
         }
     }
 }

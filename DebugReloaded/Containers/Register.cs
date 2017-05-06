@@ -3,21 +3,29 @@ using System.Linq;
 using DebugReloaded.Support;
 
 namespace DebugReloaded.Containers {
+
+    /// <summary>
+    /// Registro da 2 byte
+    /// </summary>
     public class Register : IMemorizable {
+
+        /// <summary>Nome del registro</summary>
         public string Name { get; set; }
 
+        /// <summary>Parte alta</summary>
         public byte H {
             get { return Value[0]; }
             set { Value[0] = value; }
         }
 
+        /// <summary>Parte bassa</summary>
         public byte L {
             get { return Value[1]; }
             set { Value[1] = value; }
         }
 
+        /// <summary>Valore del registro</summary>
         public byte[] Value { get; private set; } = new byte[2] {0x00, 0x00};
-
 
         public Register(string name) {
             Name = name;
@@ -26,6 +34,11 @@ namespace DebugReloaded.Containers {
         public Register() {
         }
 
+        /// <summary>
+        /// imposta i valori (IMemorizable)
+        /// </summary>
+        /// <param name="index">Che valore impostare</param>
+        /// <param name="value">Valore</param>
         public void SetValues(int index, byte[] value) {
             var bytes = new byte[2];
 
@@ -39,16 +52,31 @@ namespace DebugReloaded.Containers {
             this.SetValue(value);
         }
 
+        /// <summary>
+        /// Ottene il valore (IMemorizable)
+        /// </summary>
+        /// <returns>Value</returns>
         public byte[] GetValues(int index = 0, int howmany = 0) {
             return Value;
         }
 
+        /// <summary>
+        /// Ne Estrae un puntatore in posizione relativa
+        /// </summary>
+        /// <param name="index">Da che posizione estrarre</param>
+        /// <param name="howmany">Quanti byte estrarre</param>
+        /// <returns></returns>
         public MemoryRangePointer ExtractMemoryPointer(int index, int howmany) {
             return new MemoryRangePointer(this, index, howmany);
         }
 
+        /// <summary>Lunghezza (IMemorizable)</summary>
         public int Length => 2;
 
+        /// <summary>
+        /// imposta i valori (IMemorizable)
+        /// </summary>
+        /// <param name="value">Valore</param>
         public void SetValue(byte[] _bytes) {
             var bytes = new byte[2];
 
@@ -60,17 +88,16 @@ namespace DebugReloaded.Containers {
             Value = bytes;
         }
 
+        /// <summary>
+        /// imposta i valori (IMemorizable)
+        /// </summary>
+        /// <param name="index">Che valore impostare</param>
+        /// <param name="value">Valore (Verrà convertito)</param>
         public void SetValue(string sbytes) {
             if (sbytes.Length != 4)
                 throw new BadRegisterException(this, null, "Cannot insert more than 2 bytes in a register");
-
-            byte[] bytes =
-                Enumerable.Range(0, sbytes.Length)
-                    .Where(x => x % 2 == 0)
-                    .Select(x => Convert.ToByte(sbytes.Substring(x, 2), 16))
-                    .ToArray();
-
-            Value = bytes;
+        
+            Value = sbytes.ToByteArray();
         }
 
         public override string ToString() {
