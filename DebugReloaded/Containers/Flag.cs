@@ -22,9 +22,7 @@ namespace DebugReloaded.Containers {
         }
 
 
-        [Obsolete(
-            "Dont use that. For flag is dangeous and useless, yo can use Value prop instead or the flag itself. It is here only for inplement IMemorizable",
-            true)]
+        [Obsolete("Dont use that. For flag is dangeous and useless, yo can use Value prop instead or the flag itself. It is here only for inplement IMemorizable",true)]
         public MemoryRangePointer ExtractMemoryPointer(int index, int howmany) {
             return new MemoryRangePointer(this, 0, 1);
         }
