@@ -1,14 +1,14 @@
 ﻿using System;
+using System.Data.Entity.Core.Metadata.Edm;
+using System.Globalization;
 using System.Linq;
 using DebugReloaded.Support;
 
 namespace DebugReloaded.Containers {
-
     /// <summary>
     /// Registro da 2 byte
     /// </summary>
     public class Register : IMemorizable {
-
         /// <summary>Nome del registro</summary>
         public string Name { get; set; }
 
@@ -65,7 +65,7 @@ namespace DebugReloaded.Containers {
         /// </summary>
         /// <param name="index">Da che posizione estrarre</param>
         /// <param name="howmany">Quanti byte estrarre</param>
-        /// <returns></returns>
+        /// <returns></returns
         public MemoryRangePointer ExtractMemoryPointer(int index, int howmany) {
             return new MemoryRangePointer(this, index, howmany);
         }
@@ -78,7 +78,10 @@ namespace DebugReloaded.Containers {
         /// </summary>
         /// <param name="value">Valore</param>
         public void SetValue(byte[] _bytes) {
+            _bytes = MySupport.Normalize(_bytes);
+
             var bytes = new byte[2];
+
 
             bytes = _bytes.Length == 1 ? new byte[] {0, _bytes[0]} : _bytes;
 
@@ -93,15 +96,27 @@ namespace DebugReloaded.Containers {
         /// </summary>
         /// <param name="index">Che valore impostare</param>
         /// <param name="value">Valore (Verrà convertito)</param>
-        public void SetValue(string sbytes) {
+        public virtual void SetValue(string sbytes) {
             if (sbytes.Length != 4)
                 throw new BadRegisterException(this, null, "Cannot insert more than 2 bytes in a register");
-        
+
             Value = sbytes.ToByteArray();
         }
 
         public override string ToString() {
             return $"{Value[0]:X2}{Value[1]:X2}";
+        }
+
+        public static Register operator +(Register a, byte[] b) {
+            int value = Int32.Parse(a.Value.ToHexString(), NumberStyles.HexNumber);
+
+            value += Int32.Parse(b.ToHexString(), NumberStyles.HexNumber);
+
+            var ret = new Register(a.Name);
+
+            ret.SetValue(BitConverter.GetBytes(value).Reverse().ToArray());
+
+            return ret;
         }
     }
 }

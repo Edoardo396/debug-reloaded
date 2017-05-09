@@ -12,7 +12,7 @@ namespace DebugReloaded.Interface {
         public List<string> Parameters { get; set; }
 
         public DebugCommand(string queryString) {
-            // TODO Not Always true.
+            // NOTE Not Always true.
             CommandString = queryString[0].ToString();
 
             Parameters = queryString.Split((char) 32).Skip(1).ToList();

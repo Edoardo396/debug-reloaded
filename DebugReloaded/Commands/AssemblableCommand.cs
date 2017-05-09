@@ -13,7 +13,8 @@ namespace DebugReloaded.Commands {
         private readonly DataType[] parmsDt;
         protected readonly CommandTemplate selectedCommand;
 
-        // TODO CHECK
+        public int Length => this.Assemble().Length;
+
         public AssemblableCommand(CommandTemplate cmd, ApplicationContext ctx = null) {
             selectedCommand = cmd;
             context = ctx;

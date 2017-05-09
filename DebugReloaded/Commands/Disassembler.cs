@@ -32,6 +32,22 @@ namespace DebugReloaded.Commands {
             return cmds;
         }
 
+        public static AssemblableCommand DisassembleNextCommand(ApplicationContext context, IMemorizable memory) {
+            AssemblableCommand cmd;
+            uint lenght = 0;
+
+            try {
+                lenght = (uint) GetCommandLength(context, memory.ExtractMemoryPointer(0, memory.Length));
+            } catch {
+                cmd = new AssemblableCommand(CommandTemplate.UNKNOWN);
+                return cmd;
+            }
+
+            cmd = Dissassemble(context, memory.ExtractMemoryPointer(0, (int)lenght));
+
+            return cmd;
+        }
+
         public static int GetCommandLength(ApplicationContext ctx, IMemorizable pointer) {
             int GetLenghtParms(CommandTemplate lenTemplate) {
                 if (lenTemplate.OpCode.Count(c => c == '$') / 2 == 2) {
@@ -71,10 +87,10 @@ namespace DebugReloaded.Commands {
             int inizioPar = -1;
 
             List<CommandTemplate> allcmds = ctx.CommandTemplList.Where(el => {
-                var ret = false;
+                var ret = true;
 
                 for (var i = 0;; i += 2) {
-                    if (pointer.Length < i || el.OpCode.Length <= i || el.OpCode.Substring(i, 2).Contains('$')) {
+                    if (pointer.Length < i || el.OpCode.Length <= i || el.OpCode.Substring(i, 2).Contains('$') || !ret) {
                         inizioPar = i;
                         break;
                     }
@@ -93,7 +109,7 @@ namespace DebugReloaded.Commands {
             if (!template.OpCode.Contains("$"))
                 return new AssemblableCommand(template);
 
-            inizioPar = template.OpCode.IndexOf("$"/*, inizioPar*/); // TOLTO A CASO PERCHE NON ANDAVA
+            inizioPar = template.OpCode.IndexOf("$" /*, inizioPar*/); // TOLTO A CASO PERCHE NON ANDAVA
 
             int spar = -1;
 

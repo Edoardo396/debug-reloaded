@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DebugReloaded.Support {
@@ -69,6 +70,19 @@ namespace DebugReloaded.Support {
         }
 
         /// <summary>
+        /// Aggiunge 0 all'array fino a quando la sua lunghezza non è multipla di 4
+        /// </summary>
+        public static byte[] NormlizeForHex(byte[] _bytes) {
+            var bytes = new List<byte>(_bytes);
+
+            while(bytes.Count % 4 != 0)
+                bytes.Insert(0, 0x0);
+
+            return bytes.ToArray();
+        }
+
+
+        /// <summary>
         /// Restutuisce il testo tra 
         /// </summary> delimitatori specificati
         /// <param name="s">Stringa da cui estrarre</param>
@@ -104,7 +118,7 @@ namespace DebugReloaded.Support {
                 break;
             }
 
-            return bytes.Skip(firstNot0Pos-1).ToArray();
+            return bytes.Skip(firstNot0Pos).ToArray();
         }
 
     }

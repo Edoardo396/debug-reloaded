@@ -35,7 +35,7 @@
     <command name="mov" op1="m16" op1spec="any" op2="i16" op2spec="any" opcode="C706$op1:le$$op2:le$" />
     
     <!-- Move Command MEM / REG -->
-    <command name="mov" op1="m16" op1spec="any" op2="r16" op2spec="any" opcode="A3$op1:le$" />
+    <command name="mov" op1="m16" op1spec="any" op2="r16" op2spec="ax" opcode="A3$op1:le$" />
 
     <!-- Increment Commands REG -->
     <command name="inc" op1="r16" op1spec="ax" op2="none" op2spec="any" opcode="40" />

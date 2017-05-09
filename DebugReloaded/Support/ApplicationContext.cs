@@ -20,7 +20,7 @@ namespace DebugReloaded.Support {
         /// <summary>Documento XML con i comandi</summary>
         public static readonly XDocument doc =
             XDocument.Load(
-                @"C:\Users\edoardo.fullin\Desktop\debug-reloaded\DebugReloaded\Commands\AssemblyCommands.xml");
+                @"C:\Users\edoardo.fullin\OneDrive\Programmazione\C#\DebugReloaded\DebugReloaded\Commands\AssemblyCommands.xml");
 
         /// <summary>Dimensione memoria RAM</summary>
         public static readonly int memSize = 65535;
