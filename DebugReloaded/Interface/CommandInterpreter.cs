@@ -170,7 +170,7 @@ namespace DebugReloaded.Interface {
 
             int location = int.Parse(parameters[0], NumberStyles.HexNumber);
 
-            Console.Write($"{location}h : {context.MainMemory.Dump(location, 1)} => ");
+            Console.Write($"0x{location:X4} : {context.MainMemory.Dump(location, 1)} => ");
 
             try {
                 context.MainMemory.SetValues(location,
