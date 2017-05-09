@@ -36,7 +36,6 @@ namespace DebugReloaded.Support {
 
         /// <summary>Lista domandi da eseguire (non usati in questa versione)</summary>
         /// public List<CommandTemplate> Program = new List<CommandTemplate>();
-
         /// <summary>Versione Applicazione</summary>
         public static Version AppVersion
             => AssemblyName.GetAssemblyName(Assembly.GetExecutingAssembly().Location).Version;
@@ -57,6 +56,15 @@ namespace DebugReloaded.Support {
             new Register("ip")
         };
 
+        public List<Flag> Flags { get; } = new List<Flag> {
+            new Flag("cf"),
+            new Flag("af"),
+            new Flag("pf"),
+            new Flag("zf"),
+            new Flag("sf"),
+            new Flag("of")
+        };
+
 
         public ApplicationContext() {
             Interpreter = new CommandInterpreter(this);
@@ -69,6 +77,10 @@ namespace DebugReloaded.Support {
         /// <summary>Shortcut per ottenere il registro dato un nome</summary>
         public Register GetRegisterByName(string name) {
             return Registers.Find(r => r.Name == name);
+        }
+
+        public Flag GetFlagByName(string name) {
+            return Flags.Find(r => r.Name == name);
         }
     }
 }

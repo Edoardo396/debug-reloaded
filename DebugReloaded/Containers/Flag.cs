@@ -21,6 +21,13 @@ namespace DebugReloaded.Containers {
             return new[] {(byte) (Value ? 1 : 0)};
         }
 
+        public void Set() {
+            this.Value = true;
+        }
+
+        public void Reset() {
+            Value = false;
+        }
 
         [Obsolete("Dont use that. For flag is dangeous and useless, yo can use Value prop instead or the flag itself. It is here only for inplement IMemorizable",true)]
         public MemoryRangePointer ExtractMemoryPointer(int index, int howmany) {

@@ -9,7 +9,7 @@ namespace DebugReloaded.Commands.AssemblyCommands {
 
             var parameters = this.GetParamsMemorizables();
 
-            this.context.GetRegisterByName("ip").SetValue(parameters[0].GetValues(0, 2));
+            this.Context.GetRegisterByName("ip").SetValue(parameters[0].GetValues(0, 2));
         }
     }
 }

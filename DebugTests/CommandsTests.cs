@@ -64,7 +64,7 @@ namespace DebugTests {
             string[] memz = {"ax,[100]", "ax,ff", "[100],ax"};
 
             foreach (var s in memz)
-                foreach (var cmd in AssemblyExecutableCommand.GetIMemorizablesFromCommand(s, context))
+                foreach (var cmd in AssemblyExecutableCommand.GetIMemorizablesFromCommand(s, Context))
                     Console.WriteLine(cmd);
         }
         */

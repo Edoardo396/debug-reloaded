@@ -50,6 +50,10 @@
     
     <!-- Jump Commands J* -->
     <command name="jmp" op1="i16" op1spec="any" op2="none" op2spec="any" opcode="E9$op1:le$" />
+    <command name="jnz" op1="i16" op1spec="any" op2="none" op2spec="any" opcode="75$op1:le$" />
+    
+    
+    
 
   </Commands>
 

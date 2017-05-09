@@ -20,6 +20,8 @@ namespace DebugReloaded.Commands.AssemblyCommands {
             param[0] += param[1];
 
             parameters[0].SetValues(0, MySupport.Normalize(BitConverter.GetBytes(param[0]).Reverse().ToArray()));
+
+            base.SetResultToFlags(result: param[0]);
         }
     }
 }

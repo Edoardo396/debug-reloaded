@@ -8,7 +8,7 @@ namespace DebugReloaded.Commands {
 
         private readonly string[] parms;
 
-        protected readonly ApplicationContext context;
+        protected readonly ApplicationContext Context;
 
         private readonly DataType[] parmsDt;
         protected readonly CommandTemplate selectedCommand;
@@ -17,19 +17,19 @@ namespace DebugReloaded.Commands {
 
         public AssemblableCommand(CommandTemplate cmd, ApplicationContext ctx = null) {
             selectedCommand = cmd;
-            context = ctx;
+            Context = ctx;
         }
 
         public AssemblableCommand(CommandTemplate selectedCommand, ApplicationContext context, DataType[] parmsDt,
             string[] parms) {
             this.selectedCommand = selectedCommand;
-            this.context = context;
+            this.Context = context;
             this.parmsDt = parmsDt;
             this.parms = parms;
         }
 
         public AssemblableCommand(ApplicationContext ctx, string instruct) {
-            context = ctx;
+            Context = ctx;
 
             string cmd = instruct.Split((char) 32)[0];
             parms = instruct.Split((char) 32)[1].Split(',');
@@ -45,7 +45,7 @@ namespace DebugReloaded.Commands {
                 parmsDts[i] = CommandTemplate.DataTypeToString(parmsDt[i]);
 
             selectedCommand =
-                context.CommandTemplList.Find(
+                Context.CommandTemplList.Find(
                     c =>
                         c.Name == cmd.Replace(" ", "") && c.ParTypes.SequenceEqual(parmsDt) &&
                         this.CheckParSpecific(c, parms));

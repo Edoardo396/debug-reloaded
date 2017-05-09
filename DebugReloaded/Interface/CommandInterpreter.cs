@@ -92,8 +92,8 @@ namespace DebugReloaded.Interface {
             try {
                 if (debugCommandParameters.Count == 0)                 
                     startLocation =
-                        BitConverter.ToInt32( MySupport.Normalize(context.GetRegisterByName("ip").Value.Reverse().ToArray()), 0);
-                        //Convert.ToInt32(MySupport.Normalize(context.GetRegisterByName("ip").Value.ToArray()).ToHexString(), 10);
+                        //BitConverter.ToInt32( MySupport.Normalize(Context.GetRegisterByName("ip").Value.Reverse().ToArray()), 0);
+                        Convert.ToInt32(MySupport.Normalize(context.GetRegisterByName("ip").Value.ToArray()).ToHexString(), 16);
                 else {
                     startLocation = Convert.ToInt32(debugCommandParameters[0], 16);
                     context.GetRegisterByName("ip")

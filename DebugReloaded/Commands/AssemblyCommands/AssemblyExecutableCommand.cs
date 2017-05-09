@@ -22,13 +22,41 @@ namespace DebugReloaded.Commands.AssemblyCommands {
             return (AssemblyExecutableCommand) Activator.CreateInstance(type, myctx, instruct);
         }
 
+        public void SetResultToFlags(int result = 0, bool? carry = null, bool? auxiliary = null, bool? parity = null,
+            bool? zero = null, bool? sign = null, bool? overflow = null) {
+
+            if (carry != null)
+                Context.GetFlagByName("cf").SetValue(carry.Value); // TODO Check carry
+            
+            if (auxiliary != null)
+                Context.GetFlagByName("af").SetValue(auxiliary.Value); // TODO Check Auxiliary
+
+            if (parity != null)
+                Context.GetFlagByName("pf").SetValue(parity.Value);
+            else 
+                Context.GetFlagByName("pf").SetValue(result % 2 == 0);         
+
+            if (zero != null)
+                Context.GetFlagByName("zf").SetValue(zero.Value);
+            else 
+                Context.GetFlagByName("zf").SetValue(result == 0);
+            
+            if (sign != null)
+                Context.GetFlagByName("sf").SetValue(sign.Value);
+            else 
+                Context.GetFlagByName("sf").SetValue(result < 0);
+            
+            if (overflow != null)
+                Context.GetFlagByName("of").SetValue(overflow.Value);
+                       
+        }
+
 
         protected IMemorizable[] GetParamsMemorizables() {
-            return GetIMemorizablesFromCommand(AssemblyCommand, base.context);
+            return GetIMemorizablesFromCommand(AssemblyCommand, base.Context);
         }
 
         private static IMemorizable[] GetIMemorizablesFromCommand(string cmd, ApplicationContext context) {
-
             IMemorizable GetMemorizableFromAssembly(string ass) {
                 Register reg;
 
