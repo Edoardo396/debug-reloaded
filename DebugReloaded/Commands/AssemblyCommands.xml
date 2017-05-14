@@ -46,13 +46,22 @@
     <!-- Plus Command ADD -->
     <command name="add" op1="r16" op1spec="ax" op2="i16" op2spec="any" opcode="05$op2:le$" />
     <command name="add" op1="r16" op1spec="bx" op2="r16" op2spec="ax" opcode="01C3" />
+    <command name="add" op1="r16" op1spec="ax" op2="r16" op2spec="bx" opcode="01D8" />
     <command name="add" op1="m16" op1spec="any" op2="r16" op2spec="bx" opcode="011E$op1:le$" />
+
+    <!-- Minus Command SUB -->
+    <command name="sub" op1="r16" op1spec="ax" op2="i16" op2spec="any" opcode="2D$op2:le$" />
+    <command name="sub" op1="r16" op1spec="bx" op2="r16" op2spec="ax" opcode="29C3" />
+    <command name="sub" op1="r16" op1spec="ax" op2="r16" op2spec="bx" opcode="29D8" />
+    <command name="sub" op1="m16" op1spec="any" op2="r16" op2spec="bx" opcode="291E$op1:le$" />
     
-    <!-- Jump Commands J* -->
+    <!-- Jump Commands J* PROBLEMS -->
     <command name="jmp" op1="i16" op1spec="any" op2="none" op2spec="any" opcode="E9$op1:le$" />
     <command name="jnz" op1="i16" op1spec="any" op2="none" op2spec="any" opcode="75$op1:le$" />
-    
-    
+
+    <!-- Compare Command CMP -->
+
+    <command name="cmp" op1="r16" op1spec="ax" op2="r16" op2spec="bx" opcode="39D8" />
     
 
   </Commands>

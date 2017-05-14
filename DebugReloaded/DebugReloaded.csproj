@@ -74,9 +74,11 @@
     <Compile Include="Commands\Assembler.cs" />
     <Compile Include="Commands\AssemblyCommands\ADDExecutableCommand.cs" />
     <Compile Include="Commands\AssemblyCommands\AssemblyExecutableCommand.cs" />
+    <Compile Include="Commands\AssemblyCommands\CMPExecutableCommand.cs" />
     <Compile Include="Commands\AssemblyCommands\JMPExecutableCommand.cs" />
     <Compile Include="Commands\AssemblyCommands\JNZExecutableCommand.cs" />
     <Compile Include="Commands\AssemblyCommands\MOVExecutableCommand.cs" />
+    <Compile Include="Commands\AssemblyCommands\SUBExecutableCommand.cs" />
     <Compile Include="Commands\CommandEnums.cs" />
     <Compile Include="Commands\CommandTemplate.cs" />
     <Compile Include="Commands\Disassembler.cs" />

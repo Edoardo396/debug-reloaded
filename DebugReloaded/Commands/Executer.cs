@@ -13,7 +13,7 @@ namespace DebugReloaded.Commands {
 
         public static void Execute(string str, ApplicationContext ctx) {
 
-            AssemblyExecutableCommand cmd = GetCommandFromName(GetCommandNameFromString(str), ctx);
+            AssemblyExecutableCommand cmd = GetCommandFromName(str, ctx);
 
             cmd.Execute(); // Executed on given Context reference!
         }

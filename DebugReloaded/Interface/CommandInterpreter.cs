@@ -80,6 +80,26 @@ namespace DebugReloaded.Interface {
                     else
                         this.UCommand(debugCommand.Parameters);
                     break;
+                case "x":
+                    if (inputs.Length != 0)
+                        this.XCommand(debugCommand.Parameters, inputs[0], inputs[0]);
+                    else
+                        this.XCommand(debugCommand.Parameters);
+                    break;
+            }
+        }
+
+        private void XCommand(IReadOnlyList<string> debugCommandParameters, params string[] input) {
+           
+            ConsoleLogger.Write("I Comandi inseriti verranno eseguiti sequenzialmente, e non verranno memorizzati", "WARNING", ConsoleColor.DarkYellow);
+            while (true) {
+                Console.Write("=> ");
+                string strCmd = Console.ReadLine();
+
+                if (strCmd == "")
+                    break;
+
+                Executer.Execute(strCmd, context);
             }
         }
 
