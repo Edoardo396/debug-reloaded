@@ -13,6 +13,8 @@ namespace DebugReloaded.Interface {
 
         public DebugCommand(string queryString) {
             // NOTE Not Always true.
+            if (queryString == string.Empty)
+                return;
             CommandString = queryString[0].ToString();
 
             Parameters = queryString.Split((char) 32).Skip(1).ToList();

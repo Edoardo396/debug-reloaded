@@ -118,6 +118,9 @@ namespace DebugReloaded.Support {
                 break;
             }
 
+            if (firstNot0Pos == -1)
+                return new byte[] {0x0};
+
             return bytes.Skip(firstNot0Pos).ToArray();
         }
 

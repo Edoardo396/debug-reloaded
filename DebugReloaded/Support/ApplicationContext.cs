@@ -6,21 +6,24 @@ using DebugReloaded.Commands;
 using DebugReloaded.Containers;
 using DebugReloaded.Interface;
 using System.IO;
+using System.Net.Mime;
 
 namespace DebugReloaded.Support {
     /// <summary>
     /// Contesto dell'applicazione, contiene tutti i dati dell'applicazione corrente.
     /// </summary>
     public class ApplicationContext {
-        //  => Version.Parse(FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).FileVersion);
 
         /// <summary>Attiva modalità debug.</summary>
         public static readonly bool Verbose = true;
 
         /// <summary>Documento XML con i comandi</summary>
-        public static readonly XDocument doc =
-            XDocument.Load(
-                @"C:\Users\edoardo.fullin\OneDrive\Programmazione\C#\DebugReloaded\DebugReloaded\Commands\AssemblyCommands.xml");
+        public static XDocument doc;
+
+        ///<summary>Definisce il percorso del database</summary>
+        private static string docLoc =
+            @"..\..\Commands\AssemblyCommands.xml";
+
 
         /// <summary>Dimensione memoria RAM</summary>
         public static readonly int memSize = 65535;
@@ -67,11 +70,29 @@ namespace DebugReloaded.Support {
 
 
         public ApplicationContext() {
+            ConsoleLogger.Write("Potranno essere assemblati ed eseguiti solo i comandi presenti nel database!",
+                "WARNING", ConsoleColor.DarkYellow);
+
+            while (!File.Exists(docLoc)) {
+                ConsoleLogger.Write("File di database non trovato", "ERROR", ConsoleColor.Red);
+                docLoc = MySupport.CWR("Inserire percorso database => ");
+            }
+
+            try {
+                doc = XDocument.Load(docLoc);
+            }
+            catch (Exception e) {
+                ConsoleLogger.Write("Non sono riuscito a leggere il database correttmente, controllane le struttura.\nDettagli: "  + e.Message, "ERROR", ConsoleColor.Red);
+                Environment.Exit(1);
+            }
+
             Interpreter = new CommandInterpreter(this);
             CommandAssembler = new Assembler(this);
             // TODO REPLACE WITH PARAMS
             CommandTemplate.ctx = this;
             CommandTemplList = CommandTemplate.GetCommandsFromXML(doc);
+
+            ConsoleLogger.Write("Oggetti costruiti con successo, in attesa di comandi: ", "MESSAGE", ConsoleColor.Green);
         }
 
         /// <summary>Shortcut per ottenere il registro dato un nome</summary>

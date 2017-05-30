@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using DebugReloaded.Containers;
 using DebugReloaded.Support;
 
 namespace DebugReloaded.Commands {
     public class Disassembler {
-        public static List<AssemblableCommand> MultiCommandDisassembler(ApplicationContext ctx, IMemorizable pointer) {
+        public static List<AssemblableCommand> MultiCommandDisassembler(ApplicationContext ctx, IMemorizable pointer, [Optional] ref List<int> ids) {
             var cmds = new List<AssemblableCommand>();
 
             for (var index = 0; index < pointer.Length;) {
@@ -18,14 +19,15 @@ namespace DebugReloaded.Commands {
                     // ConsoleLogger.Write("Cannot find a command with OpCode " + (pointer.ExtractMemoryPointer(index, pointer.Length - index)).ToString(), "ERROR", ConsoleColor.Red);
                     index += 1;
                     cmds.Add(new AssemblableCommand(CommandTemplate.UNKNOWN));
+                    ids.Add(index);
                     continue;
                 }
 
                 if (length > pointer.Length - index)
                     break;
 
-                cmds.Add(Dissassemble(ctx, pointer.ExtractMemoryPointer(index, length)));
-
+                cmds.Add(Dissassemble(ctx, pointer.ExtractMemoryPointer(index, length)));             
+                ids.Add(index);
                 index += length;
             }
 

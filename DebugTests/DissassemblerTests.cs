@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using DebugReloaded.Commands;
 using DebugReloaded.Containers;
 using DebugReloaded.Support;
@@ -86,7 +87,9 @@ namespace DebugTests {
             
             Memory mem = new Memory(MySupport.GetBytesArrayFromString("89D889C1B8FF56404341C70600018967"));
 
-            var cmds = Disassembler.MultiCommandDisassembler(DebugCommandsTests.context, mem);
+            var ids = new List<int>();
+
+            var cmds = Disassembler.MultiCommandDisassembler(DebugCommandsTests.context, mem, ref ids);
 
             foreach (var cmd in cmds) 
                 Console.WriteLine(cmd);

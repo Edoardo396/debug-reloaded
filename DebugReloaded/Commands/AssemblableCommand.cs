@@ -11,7 +11,7 @@ namespace DebugReloaded.Commands {
         protected readonly ApplicationContext Context;
 
         private readonly DataType[] parmsDt;
-        protected readonly CommandTemplate selectedCommand;
+        public CommandTemplate selectedCommand { get; protected set; }
 
         public int Length => this.Assemble().Length;
 

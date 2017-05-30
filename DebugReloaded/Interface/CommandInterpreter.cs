@@ -90,8 +90,8 @@ namespace DebugReloaded.Interface {
         }
 
         private void XCommand(IReadOnlyList<string> debugCommandParameters, params string[] input) {
-           
-            ConsoleLogger.Write("I Comandi inseriti verranno eseguiti sequenzialmente, e non verranno memorizzati", "WARNING", ConsoleColor.DarkYellow);
+            ConsoleLogger.Write("I Comandi inseriti verranno eseguiti sequenzialmente, e non verranno memorizzati",
+                "WARNING", ConsoleColor.DarkYellow);
             while (true) {
                 Console.Write("=> ");
                 string strCmd = Console.ReadLine();
@@ -104,16 +104,16 @@ namespace DebugReloaded.Interface {
         }
 
 
-        private void GCommand(List<string> debugCommandParameters, params string[] input) {
-        }
+        private void GCommand(List<string> debugCommandParameters, params string[] input) { }
 
         private void TCommand(List<string> debugCommandParameters, params string[] input) {
             int startLocation;
             try {
-                if (debugCommandParameters.Count == 0)                 
+                if (debugCommandParameters.Count == 0)
                     startLocation =
                         //BitConverter.ToInt32( MySupport.Normalize(Context.GetRegisterByName("ip").Value.Reverse().ToArray()), 0);
-                        Convert.ToInt32(MySupport.Normalize(context.GetRegisterByName("ip").Value.ToArray()).ToHexString(), 16);
+                        Convert.ToInt32(
+                            MySupport.Normalize(context.GetRegisterByName("ip").Value.ToArray()).ToHexString(), 16);
                 else {
                     startLocation = Convert.ToInt32(debugCommandParameters[0], 16);
                     context.GetRegisterByName("ip")
@@ -123,8 +123,14 @@ namespace DebugReloaded.Interface {
                 AssemblableCommand nextCommand = Disassembler.DisassembleNextCommand(context,
                     context.MainMemory.ExtractMemoryPointer(
                         Convert.ToInt32(
-                            MySupport.NormlizeForHex(context.GetRegisterByName("ip").Value).ToArray().ToHexString(), 16),
+                            MySupport.NormlizeForHex(context.GetRegisterByName("ip").Value).ToArray().ToHexString(),
+                            16),
                         16));
+
+                if (nextCommand.selectedCommand == CommandTemplate.UNKNOWN) {
+                    ConsoleLogger.Write("Comando non riconoscuto", "ERROR", ConsoleColor.Red);
+                    return;
+                }
 
                 AssemblyExecutableCommand cmd = AssemblyExecutableCommand.GetCommandFromName(nextCommand.ToString(),
                     context);
@@ -136,7 +142,8 @@ namespace DebugReloaded.Interface {
                 cmd.Execute();
 
                 this.RCommand(null);
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 ConsoleLogger.Write("Error: " + e.Message + " CLASS: " + e.ToString(), "ERROR", ConsoleColor.Red);
             }
         }
@@ -145,13 +152,19 @@ namespace DebugReloaded.Interface {
         private void UCommand(IReadOnlyList<string> debugCommandParameters, params string[] input) {
             if (debugCommandParameters.Count != 1)
                 return;
-            int index = int.Parse(debugCommandParameters[0]);
+            int index = int.Parse(debugCommandParameters[0], NumberStyles.HexNumber);
 
             MemoryRangePointer pointer = context.MainMemory.ExtractMemoryPointer(index, 50);
 
-            List<AssemblableCommand> cmds = Disassembler.MultiCommandDisassembler(context, pointer);
+            var indexList = new List<int>();
 
-            foreach (AssemblableCommand cmd in cmds) Console.WriteLine(cmd.ToString());
+            List<AssemblableCommand> cmds = Disassembler.MultiCommandDisassembler(context, pointer, ref indexList);
+
+            for (var i = 0; i < cmds.Count; i++) {
+                AssemblableCommand cmd = cmds[i];
+                if (cmd.ToString().TrimEnd() != "????")
+                    Console.WriteLine($"{(indexList[i] + index):X4} => {cmd.ToString()}");
+            }
         }
 
         private void ACommand(IReadOnlyList<string> parameters, params string[] inputs) {
@@ -171,7 +184,8 @@ namespace DebugReloaded.Interface {
                 try {
                     bytes = context.CommandAssembler.Assemble(buffer);
                     context.MainMemory.SetValues(index, bytes);
-                } catch (Exception e) {
+                }
+                catch (Exception e) {
                     Console.WriteLine("Errore: " + e.Message);
                     continue;
                 }
@@ -195,7 +209,8 @@ namespace DebugReloaded.Interface {
             try {
                 context.MainMemory.SetValues(location,
                     MySupport.GetBytesArrayFromString(inputs.Length == 0 ? Console.ReadLine() : inputs[0]));
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 Console.WriteLine("Error while inserting data: " + e.Message);
             }
         }
@@ -220,6 +235,11 @@ namespace DebugReloaded.Interface {
                 foreach (Register register in context.Registers)
                     Console.Write($"{register.Name.ToUpper()}={register}   ");
                 Console.WriteLine();
+
+                foreach (Flag flag in context.Flags) {
+                    Console.Write(flag.ToString() + " ");
+                }
+
                 return;
             }
 
@@ -233,15 +253,15 @@ namespace DebugReloaded.Interface {
 
                 Console.WriteLine($"{reg.Name.ToUpper()} {reg}");
                 try {
-
                     var stringaInput = inputs.Length == 0 ? MySupport.CWR(":") : inputs[0];
                     MySupport.NormalizeValueString(ref stringaInput);
                     reg.SetValue(stringaInput);
-
-                } catch (Exception e) {
+                }
+                catch (Exception e) {
                     Console.WriteLine("Unable to set register value, " + e.Message);
                 }
             }
+           Console.WriteLine("\n\r"); 
         }
 
 
@@ -250,7 +270,7 @@ namespace DebugReloaded.Interface {
         /// </summary>
         /// <param name="loc">Byte inizuiale</param>
         private void PrintLocationMemory(ref int loc) {
-            Console.Write($"{loc}h" + "   ");
+            Console.Write($"{loc:X4}" + "   ");
 
             for (var i = 0; i < 16; i++) {
                 Console.Write($"{context.MainMemory[loc]:X2}  ");

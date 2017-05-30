@@ -22,7 +22,7 @@ namespace DebugReloaded.Commands.AssemblyCommands {
             return (AssemblyExecutableCommand) Activator.CreateInstance(type, myctx, instruct);
         }
 
-        public void SetResultToFlags(int result = 0, bool? carry = null, bool? auxiliary = null, bool? parity = null,
+        protected void SetResultToFlags(int result = 0, bool? carry = null, bool? auxiliary = null, bool? parity = null,
             bool? zero = null, bool? sign = null, bool? overflow = null) {
 
             if (carry != null)
@@ -57,7 +57,8 @@ namespace DebugReloaded.Commands.AssemblyCommands {
         }
 
         private static IMemorizable[] GetIMemorizablesFromCommand(string cmd, ApplicationContext context) {
-            IMemorizable GetMemorizableFromAssembly(string ass) {
+
+            IMemorizable GetMemorizableFromAssembly(string ass) { // FUNCTION
                 Register reg;
 
                 if ((reg = context.Registers.Find(r => r.Name == ass)) != null)
